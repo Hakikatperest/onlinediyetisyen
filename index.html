@@ -370,6 +370,12 @@
   .wa-float{position:fixed;right:20px;bottom:20px;z-index:60;width:60px;height:60px;border-radius:50%;
     background:var(--wa);color:#fff;display:grid;place-items:center;box-shadow:0 14px 30px -8px rgba(37,211,102,.7)}
   .wa-float svg{width:32px;height:32px}
+  /* Floating Call (mavi arama butonu) */
+  .call-float{position:fixed;right:20px;bottom:90px;z-index:60;width:60px;height:60px;border-radius:50%;
+    background:#2563eb;color:#fff;display:grid;place-items:center;box-shadow:0 14px 30px -8px rgba(37,99,235,.7)}
+  .call-float svg{width:30px;height:30px}
+  @keyframes pulseBlue{0%{box-shadow:0 0 0 0 rgba(37,99,235,.5)}70%{box-shadow:0 0 0 15px rgba(37,99,235,0)}100%{box-shadow:0 0 0 0 rgba(37,99,235,0)}}
+  .pulse-blue{animation:pulseBlue 2s infinite}
 
   /* Responsive */
   @media(max-width:980px){
@@ -398,6 +404,20 @@
     .serv-grid,.rev-grid,.vid-grid,.steps{grid-template-columns:1fr}
     .topbar .tb-left{display:none}
     .topbar .wrap{justify-content:center}
+    .topbar .tb-right{flex-wrap:wrap;justify-content:center;gap:6px 14px}
+    .foot-grid{grid-template-columns:1fr;gap:26px}
+    .hero-points{gap:12px 18px}
+    .hero-float{display:none}
+    .hero .wrap{padding-top:40px;padding-bottom:48px}
+    .wa-float,.call-float{width:54px;height:54px}
+    .call-float{bottom:84px}
+    .hero-cta .btn{flex:1 1 auto;justify-content:center}
+  }
+  @media(max-width:430px){
+    .stats .wrap{grid-template-columns:1fr 1fr;gap:22px}
+    .stats .num{font-size:1.8rem}
+    .ci-row{padding:14px 14px}
+    h1,.hero h1{word-break:break-word}
   }
 
   /* ===== Açılış animasyonu ===== */
@@ -1125,6 +1145,11 @@
     </div>
   </div>
 </footer>
+
+<!-- ===== Floating Call (mavi arama butonu) ===== -->
+<a class="call-float pulse-blue" href="tel:+905070361859" aria-label="Telefonla Ara">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+</a>
 
 <!-- ===== Floating WhatsApp ===== -->
 <a class="wa-float pulse" href="https://wa.me/905070361859?text=Merhaba%2C%20online%20diyet%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" aria-label="WhatsApp">
