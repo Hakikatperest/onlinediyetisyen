@@ -36,6 +36,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://www.youtube-nocookie.com">
+<link rel="preconnect" href="https://i.ytimg.com">
 
 <style>
   :root{
@@ -238,6 +240,18 @@
   .guide-item li::before{content:"✓";color:var(--green-600);font-weight:800;flex:none}
   .guide-cta{text-align:center;margin-top:28px}
   @media(max-width:720px){.guide-item{padding:22px 20px}.guide-item h3{font-size:1.12rem}}
+  /* Karşılaştırma tablosu */
+  .cmp-wrap{margin:18px 0 10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .cmp{width:100%;min-width:520px;border-collapse:separate;border-spacing:0;font-size:.95rem;
+    border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .cmp th,.cmp td{padding:13px 15px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  .cmp thead th{background:var(--green-900);color:#fff;font-weight:700;font-size:.92rem}
+  .cmp thead th.hl{background:var(--green-600)}
+  .cmp tbody tr:last-child td{border-bottom:0}
+  .cmp td.feat{font-weight:700;color:var(--green-900);background:var(--green-50);width:30%}
+  .cmp td.on{background:#eef9f1;color:#16623e;font-weight:600}
+  .cmp td.kl{color:#5a6b62}
+  .cmp-note{font-size:.88rem;color:var(--muted);margin-top:4px}
 
   /* How it works */
   .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
@@ -539,7 +553,11 @@
     {"@type":"Question","name":"Diyet sürecinde aç kalır mıyım, yasak besin var mı?","acceptedAnswer":{"@type":"Answer","text":"Hayır. Yasaksız ve sürdürülebilir bir beslenme anlayışı esastır; sevdiğiniz yiyecekler dengeli şekilde programınıza dahil edilir. Amaç aç bırakmak değil, doğru ve kalıcı alışkanlıklar kazandırmaktır."}},
     {"@type":"Question","name":"Türkiye'nin her ilinden online diyet hizmeti alabilir miyim?","acceptedAnswer":{"@type":"Answer","text":"Evet. İnternet bağlantısı olan herkes, bulunduğu ilden bağımsız olarak online diyet hizmeti alabilir. Nerede olduğunuzun önemi yoktur; telefonunuzla diyetisyeninize ulaşmanız yeterlidir."}},
     {"@type":"Question","name":"Diyabet, PCOS veya insülin direncinde online beslenme desteği alabilir miyim?","acceptedAnswer":{"@type":"Answer","text":"Evet. Diyabet, insülin direnci, PCOS, tiroit ve benzeri durumlarda doktor tedavinizi destekleyen, kişiye özel beslenme programları hazırlanır."}},
-    {"@type":"Question","name":"Online diyete nasıl başlarım?","acceptedAnswer":{"@type":"Answer","text":"WhatsApp'tan veya telefonla iletişime geçerek ön görüşme yapabilir, ardından analiz ve kişiye özel programınızla sürece hemen başlayabilirsiniz."}}
+    {"@type":"Question","name":"Online diyete nasıl başlarım?","acceptedAnswer":{"@type":"Answer","text":"WhatsApp'tan veya telefonla iletişime geçerek ön görüşme yapabilir, ardından analiz ve kişiye özel programınızla sürece hemen başlayabilirsiniz."}},
+    {"@type":"Question","name":"Online diyet hizmeti alırken hangi şehirde olduğum fark eder mi?","acceptedAnswer":{"@type":"Answer","text":"Hayır, hiç fark etmez. İnternet bağlantısı olan herkes, Türkiye'nin hangi ilinde olursa olsun online diyet hizmeti alabilir. İster büyük bir şehirde ister küçük bir ilçede olun; nerede olduğunuzun bir önemi yoktur."}},
+    {"@type":"Question","name":"Ücretsiz online diyetisyen hizmeti var mı?","acceptedAnswer":{"@type":"Answer","text":"İlk tanışmamızda ücretsiz olarak bir yol haritası çıkarır ve süreç hakkında bilgilendirme yaparız. Birlikte belirlediğimiz diyet yolculuğuna başlarken ise ödeme alınır. Kısacası tanışma ve ön bilgilendirme ücretsiz, asıl program ücretlidir."}},
+    {"@type":"Question","name":"Sadece diyet ile kilo verebilir miyim?","acceptedAnswer":{"@type":"Answer","text":"Evet, doğru bir beslenme programıyla kilo verebilirsiniz. Ancak sağlıklı ve kalıcı bir sonuç için tek başına diyet yeterli değildir; hareketli bir yaşam ve düzenli spor süreci hızlandırır ve verdiğiniz kiloları korumanıza yardımcı olur. En iyi sonuç, diyet ve hareketin birlikte yürüdüğü yerde ortaya çıkar."}},
+    {"@type":"Question","name":"Diyet programınızın içinde spor da oluyor mu?","acceptedAnswer":{"@type":"Answer","text":"Hayır. Bizim uzmanlık alanımız diyetisyenliktir; spor programı yazmak antrenörün işidir. Biz günde yaklaşık ne kadar kalori yakmanızın iyi olacağını söyleyebiliriz. Bize göre en iyi ve en sürdürülebilir spor yürümek, yani hareketli bir yaşamdır."}}
   ]
 }
 </script>
@@ -575,6 +593,40 @@
   "name":"Online Diyetisyen",
   "inLanguage":"tr-TR",
   "publisher":{"@id":"https://www.onlinediyetisyen.online/#business"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"VideoObject",
+      "name":"Ramazan'da Nasıl Beslenmeliyiz?",
+      "description":"Online Diyetisyen Tuğba Şeker Ağaç'tan Ramazan ayında sağlıklı ve dengeli beslenme önerileri.",
+      "thumbnailUrl":"https://i.ytimg.com/vi/yJBjeg2Csrs/hqdefault.jpg",
+      "contentUrl":"https://www.youtube.com/watch?v=yJBjeg2Csrs",
+      "embedUrl":"https://www.youtube-nocookie.com/embed/yJBjeg2Csrs",
+      "publisher":{"@id":"https://www.onlinediyetisyen.online/#business"}
+    },
+    {
+      "@type":"VideoObject",
+      "name":"Şekersiz Kek Tarifi",
+      "description":"Diyetinizi bozmadan tatlı krizinize çözüm: Online Diyetisyen Tuğba Şeker Ağaç'tan şekersiz kek tarifi.",
+      "thumbnailUrl":"https://i.ytimg.com/vi/6IfEDX0r8zQ/hqdefault.jpg",
+      "contentUrl":"https://www.youtube.com/watch?v=6IfEDX0r8zQ",
+      "embedUrl":"https://www.youtube-nocookie.com/embed/6IfEDX0r8zQ",
+      "publisher":{"@id":"https://www.onlinediyetisyen.online/#business"}
+    },
+    {
+      "@type":"VideoObject",
+      "name":"Bağışıklık Güçlendiren Çorba Tarifi",
+      "description":"Kış aylarında bağışıklığınızı güçlendirecek besleyici çorba tarifi.",
+      "thumbnailUrl":"https://i.ytimg.com/vi/U-Ae6qZYAZs/hqdefault.jpg",
+      "contentUrl":"https://www.youtube.com/watch?v=U-Ae6qZYAZs",
+      "embedUrl":"https://www.youtube-nocookie.com/embed/U-Ae6qZYAZs",
+      "publisher":{"@id":"https://www.onlinediyetisyen.online/#business"}
+    }
+  ]
 }
 </script>
 </head>
@@ -653,7 +705,7 @@
     <div class="hero-visual">
       <div class="hero-float hf-1"><span class="dot" style="background:#fff3e0">⚖️</span><div>Hedef Kilo<small>Sürdürülebilir sonuç</small></div></div>
       <div class="hero-img-wrap">
-        <img src="https://www.onlinediyetisyen.online/images/online-diyetisyen-tugba.webp" alt="Online Diyetisyen Tuğba Şeker Ağaç beyaz önlüğüyle gülümserken" loading="eager" width="1512" height="1320" onerror="this.remove()">
+        <img src="https://www.onlinediyetisyen.online/images/online-diyetisyen-tugba.webp" alt="Online Diyetisyen Tuğba Şeker Ağaç beyaz önlüğüyle gülümserken" loading="eager" fetchpriority="high" width="1512" height="1320" onerror="this.remove()">
         <div class="hero-img-cap">
           <div class="emoji">🍎</div>
           <h3>Size Özel Online Diyet</h3>
@@ -866,6 +918,23 @@
         <p>İlk olarak şunu net söyleyelim: İçerik, bilgi ve uzmanlık açısından ikisi arasında hiçbir fark yoktur. Aynı diyetisyen, aynı bilgiyle size hizmet eder; tek fark görüşmenin nerede yapıldığıdır.</p>
         <p>Klinik diyetisyende randevu alır, yola çıkar, trafiğe takılır ve sıra beklersiniz. Online diyetisyende ise bütün bu yükten kurtulursunuz; nerede olursanız olun telefonunuzu açıp diyetisyeninize ulaşabilirsiniz. Üstelik online hizmet çoğu zaman daha ekonomiktir ve diyetisyeninize çok daha hızlı ulaşırsınız.</p>
         <p>Kısacası online diyet; size zamandan, yoldan ve bütçeden tasarruf ettirirken, ihtiyacınız olan profesyonel desteği bir adım öteden ayağınıza getirir.</p>
+        <div class="cmp-wrap">
+          <table class="cmp">
+            <thead>
+              <tr><th>Özellik</th><th class="hl">🟢 Online Diyetisyen</th><th>🏥 Klinik Diyetisyen</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="feat">Ulaşılabilirlik</td><td class="on">Türkiye'nin her ilinden, 7/24</td><td class="kl">Randevu + mesai saatleri</td></tr>
+              <tr><td class="feat">Yol &amp; zaman</td><td class="on">Sıfır yol, sıfır trafik</td><td class="kl">Yola çıkma ve sıra bekleme</td></tr>
+              <tr><td class="feat">Uzmanlık &amp; bilgi</td><td class="on">Aynı (diyetisyen)</td><td class="kl">Aynı (diyetisyen)</td></tr>
+              <tr><td class="feat">Kişiye özel program</td><td class="on">Var</td><td class="kl">Var</td></tr>
+              <tr><td class="feat">Öğün takibi</td><td class="on">WhatsApp'tan fotoğrafla, anında</td><td class="kl">Genelde kontrol gününde</td></tr>
+              <tr><td class="feat">Görüşme şekli</td><td class="on">Görüntülü, sesli veya yazılı</td><td class="kl">Yüz yüze</td></tr>
+              <tr><td class="feat">Maliyet</td><td class="on">Genellikle daha ekonomik</td><td class="kl">Genellikle daha yüksek</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="cmp-note">Not: Uzmanlık ve bilgi açısından ikisi de aynıdır; tek fark görüşmenin nerede yapıldığıdır.</p>
       </article>
 
       <article class="guide-item">
@@ -1141,6 +1210,18 @@
 
       <div class="faq-item"><button class="faq-q">Online diyete nasıl başlarım?<span class="ic">+</span></button>
         <div class="faq-a"><div>Çok kolay: WhatsApp'tan veya telefonla iletişime geçip ön görüşme yapın. Ardından analiz ve ölçümlerinizle kişiye özel programınız hazırlanır ve sürece hemen başlarsınız. Hemen <a href="https://wa.me/905070361859" target="_blank" rel="noopener" style="color:var(--green-600);font-weight:700">WhatsApp'tan yazabilirsiniz</a>.</div></div></div>
+
+      <div class="faq-item"><button class="faq-q">Online diyet hizmeti alırken hangi şehirde olduğum fark eder mi?<span class="ic">+</span></button>
+        <div class="faq-a"><div>Hayır, hiç fark etmez! İnternet bağlantısı olan herkes, Türkiye'nin hangi ilinde olursa olsun online diyet hizmeti alabilir. İster büyük bir şehirde olun ister küçük bir ilçede; tek ihtiyacınız bir telefon ve biraz istek. Nerede olduğunuzun hiçbir önemi yok, biz her an yanınızdayız.</div></div></div>
+
+      <div class="faq-item"><button class="faq-q">Ücretsiz online diyetisyen hizmeti var mı?<span class="ic">+</span></button>
+        <div class="faq-a"><div>İlk tanışmamızda sizlere <strong>ücretsiz</strong> olarak bir yol haritası çıkarıyor ve süreç hakkında bilgilendirme yapıyoruz; yani daha başlamadan neyin sizi beklediğini gönül rahatlığıyla öğreniyorsunuz. Birlikte belirlediğimiz bu diyet yolculuğuna başlarken ise ödeme alıyoruz. Kısacası tanışmamız ve ön bilgilendirme ücretsiz, asıl program ise ücretlidir.</div></div></div>
+
+      <div class="faq-item"><button class="faq-q">Sadece diyet ile kilo verebilir miyim?<span class="ic">+</span></button>
+        <div class="faq-a"><div>Evet, sadece doğru bir beslenme programıyla kilo verebilirsiniz. Ancak şunu içtenlikle söyleyelim: Sağlıklı, kalıcı ve formda bir vücut için tek başına diyet yeterli değildir. Hareketli bir yaşam ve düzenli spor; hem kilo verme sürecini hızlandırır hem de verdiğiniz kiloları korumanıza yardımcı olur. Yani en güzel sonuç, diyet ile hareketin birlikte yürüdüğü yerde ortaya çıkar.</div></div></div>
+
+      <div class="faq-item"><button class="faq-q">Diyet programınızın içinde spor da oluyor mu?<span class="ic">+</span></button>
+        <div class="faq-a"><div>Hayır; çünkü bizim uzmanlık alanımız diyetisyenliktir, spor programı yazmak ise bir antrenörün işidir. Biz size günde yaklaşık ne kadar kalori yakmanızın iyi olacağını söyleyebiliriz. Bize göre en iyi ve en sürdürülebilir spor ise <strong>yürümek</strong>, yani hareketli bir yaşamdır. 🙂 Günlük adımlarınızı artırmak bile başlı başına büyük bir fark yaratır.</div></div></div>
     </div>
   </div>
 </section>
