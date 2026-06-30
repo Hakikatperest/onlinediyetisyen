@@ -515,12 +515,19 @@
   @keyframes leafFloat{0%{transform:translateY(0) rotate(0);opacity:0}
     10%{opacity:.16}85%{opacity:.13}100%{transform:translateY(-120vh) rotate(240deg);opacity:0}}
 
+  /* ===== Kaydırınca beliren bölümler (scroll reveal) ===== */
+  .reveal{opacity:0;transition:opacity .7s ease,transform .85s cubic-bezier(.16,.8,.3,1);will-change:opacity,transform}
+  .reveal.from-left{transform:translateX(-50px)}
+  .reveal.from-right{transform:translateX(50px)}
+  .reveal.is-visible{opacity:1;transform:none}
+
   @media (prefers-reduced-motion: reduce){
     #splash{animation:splashOut .3s ease .15s forwards}
     .splash-ring,.splash-leaf,.splash-inner{animation:none}
     .hero .hero-badge,.hero h1,.hero p.lead,.hero .hero-cta,.hero .hero-points,.hero .hero-visual{opacity:1;animation:none}
     .hf-1,.hf-2{animation:none}
     .hero-leaves{display:none}
+    .reveal{opacity:1!important;transform:none!important;transition:none}
   }
 </style>
 
@@ -1378,6 +1385,28 @@
       if(!open){item.classList.add('open');ans.style.maxHeight=ans.scrollHeight+'px';}
     });
   });
+  // Kaydırınca bölümler soldan/sağdan belirsin (scroll reveal)
+  (function(){
+    var secs = Array.prototype.slice.call(document.querySelectorAll('main > section'));
+    secs.shift(); // hero hariç (kendi giriş animasyonu var)
+    secs.forEach(function(sec, i){
+      var el = null;
+      for(var c = sec.firstElementChild; c; c = c.nextElementSibling){
+        if(c.className && (/\bwrap\b/.test(c.className) || /\bband-inner\b/.test(c.className))){ el = c; break; }
+      }
+      if(!el) el = sec;
+      el.classList.add('reveal', (i % 2) ? 'from-right' : 'from-left');
+    });
+    var items = document.querySelectorAll('.reveal');
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+      }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+      items.forEach(function(el){ io.observe(el); });
+    } else {
+      items.forEach(function(el){ el.classList.add('is-visible'); });
+    }
+  })();
 </script>
 
 </body>
