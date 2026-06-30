@@ -1,0 +1,45 @@
+# onlinediyetisyen.online — robots.txt
+# Tüm arama motoru botlarına izin
+User-agent: *
+Allow: /
+
+# --- Yapay Zeka / LLM botları (2026) ---
+# Bu botlara izin vermek, AI yanıtlarında (Google AI Overviews, ChatGPT,
+# Perplexity, Gemini vb.) sitenin kaynak gösterilmesini sağlar.
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://www.onlinediyetisyen.online/sitemap.xml
