@@ -26,11 +26,12 @@
 <meta property="og:description" content="Evinizden çıkmadan, Türkiye'nin her ilinden kişiye özel online diyet. 5,0 ★ · 113 yorum.">
 <meta property="og:url" content="https://www.onlinediyetisyen.online/">
 <meta property="og:site_name" content="Online Diyetisyen">
-<!-- GÖRSEL: paylaşım önizleme görseli (1200x630). Yolunu verince eklerim. -->
-<meta property="og:image" content="https://www.onlinediyetisyen.online/images/og-image.jpg">
+<meta property="og:image" content="https://www.onlinediyetisyen.online/images/online-diyetisyen.webp">
+<meta property="og:image:alt" content="Online Diyetisyen Tuğba Şeker Ağaç">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Online Diyetisyen | Diyetisyen Tuğba Şeker Ağaç">
 <meta name="twitter:description" content="Evinizden çıkmadan kişiye özel online diyet. 5,0 ★ · 113 yorum.">
+<meta name="twitter:image" content="https://www.onlinediyetisyen.online/images/online-diyetisyen.webp">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -145,7 +146,7 @@
   .hero-img-cap h3{font-size:1.3rem;margin:4px 0 6px}
   .hero-img-cap p{opacity:.95;font-size:.93rem}
   .about-extra-img{margin-top:20px;border-radius:16px;overflow:hidden;border:1px solid var(--line);
-    box-shadow:var(--shadow-sm);aspect-ratio:16/10;background:var(--green-100)}
+    box-shadow:var(--shadow-sm);aspect-ratio:4/3;background:var(--green-100)}
   .about-extra-img img{width:100%;height:100%;object-fit:cover;display:block}
   .img-band{position:relative;min-height:330px;display:grid;place-items:center;text-align:center;
     color:#fff;overflow:hidden;background:var(--green-700)}
@@ -154,6 +155,15 @@
   .img-band .band-inner{position:relative;padding:54px 22px;max-width:720px}
   .img-band h2{font-size:clamp(1.5rem,3.4vw,2.3rem);font-weight:800;margin-bottom:12px}
   .img-band p{opacity:.95;font-size:1.05rem}
+  .logo-img{height:46px;width:auto;display:block}
+  @media(max-width:720px){.logo-img{height:40px}}
+  .info-figure{max-width:620px;margin:0 auto 40px;border-radius:20px;overflow:hidden;
+    border:1px solid var(--line);box-shadow:var(--shadow-sm);background:#fff}
+  .info-figure img{width:100%;height:auto;display:block}
+  .avatar-img{width:150px;height:150px;border-radius:50%;object-fit:cover;margin:0 auto 16px;
+    border:4px solid #fff;box-shadow:var(--shadow-sm);display:block}
+  .contact-img{width:100%;max-height:240px;object-fit:cover;border-radius:var(--radius);
+    border:1px solid var(--line);box-shadow:var(--shadow-sm);display:block}
   .hero-float{position:absolute;background:#fff;border-radius:16px;padding:14px 18px;box-shadow:var(--shadow);
     display:flex;align-items:center;gap:12px;font-weight:700}
   .hero-float .dot{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:1.3rem;flex:none}
@@ -389,6 +399,49 @@
     .topbar .tb-left{display:none}
     .topbar .wrap{justify-content:center}
   }
+
+  /* ===== Açılış animasyonu ===== */
+  #splash{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;
+    background:radial-gradient(900px 500px at 50% 35%,var(--green-500),var(--green-800) 60%,var(--green-900));
+    animation:splashOut .7s ease 1.5s forwards}
+  .splash-inner{text-align:center;color:#fff;animation:splashPop .7s cubic-bezier(.2,.8,.2,1) both}
+  .splash-emblem{position:relative;width:108px;height:108px;margin:0 auto 18px;display:grid;place-items:center}
+  .splash-ring{position:absolute;inset:0;border-radius:50%;border:3px solid rgba(255,255,255,.28);
+    border-top-color:#fff;animation:splashSpin .9s linear infinite}
+  .splash-leaf{font-size:3rem;animation:splashBeat 1s ease-in-out infinite}
+  .splash-text{font-size:1.55rem;font-weight:800;letter-spacing:-.02em}
+  .splash-sub{font-size:.86rem;opacity:.82;margin-top:6px}
+  @keyframes splashSpin{to{transform:rotate(360deg)}}
+  @keyframes splashBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.13)}}
+  @keyframes splashPop{from{opacity:0;transform:translateY(14px) scale(.95)}to{opacity:1;transform:none}}
+  @keyframes splashOut{to{opacity:0;visibility:hidden}}
+
+  /* Hero giriş + ambient */
+  .hero .wrap{position:relative;z-index:2}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .hero .hero-badge{opacity:0;animation:fadeUp .7s ease 1.6s forwards}
+  .hero h1{opacity:0;animation:fadeUp .7s ease 1.74s forwards}
+  .hero p.lead{opacity:0;animation:fadeUp .7s ease 1.88s forwards}
+  .hero .hero-cta{opacity:0;animation:fadeUp .7s ease 2.02s forwards}
+  .hero .hero-points{opacity:0;animation:fadeUp .7s ease 2.16s forwards}
+  .hero .hero-visual{opacity:0;animation:fadeIn .9s ease 1.9s forwards}
+  .hf-1{animation:bob 4.5s ease-in-out infinite}
+  .hf-2{animation:bob 4.5s ease-in-out 1.6s infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  .hero-leaves{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+  .hero-leaves span{position:absolute;bottom:-46px;font-size:1.7rem;opacity:0;will-change:transform;
+    animation:leafFloat 11s linear infinite}
+  @keyframes leafFloat{0%{transform:translateY(0) rotate(0);opacity:0}
+    10%{opacity:.16}85%{opacity:.13}100%{transform:translateY(-120vh) rotate(240deg);opacity:0}}
+
+  @media (prefers-reduced-motion: reduce){
+    #splash{animation:splashOut .3s ease .15s forwards}
+    .splash-ring,.splash-leaf,.splash-inner{animation:none}
+    .hero .hero-badge,.hero h1,.hero p.lead,.hero .hero-cta,.hero .hero-points,.hero .hero-visual{opacity:1;animation:none}
+    .hf-1,.hf-2{animation:none}
+    .hero-leaves{display:none}
+  }
 </style>
 
 <!-- ===== Schema.org ===== -->
@@ -402,7 +455,8 @@
   "url":"https://www.onlinediyetisyen.online/",
   "telephone":"+905070361859",
   "priceRange":"₺₺",
-  "image":"https://www.onlinediyetisyen.online/images/og-image.jpg",
+  "image":"https://www.onlinediyetisyen.online/images/online-diyetisyen1.webp",
+  "logo":"https://www.onlinediyetisyen.online/images/online-diyetisyen-logo.png",
   "address":{"@type":"PostalAddress","streetAddress":"Kurtuluş Mah. Demokrasi Sok. Atatürk Cad. Gülbahçesi Sitesi B/Blok Kat:2 No:205","addressLocality":"Seyhan","addressRegion":"Adana","postalCode":"01010","addressCountry":"TR"},
   "geo":{"@type":"GeoCoordinates","latitude":36.999979,"longitude":35.320473},
   "areaServed":{"@type":"Country","name":"Türkiye"},
@@ -462,7 +516,7 @@
   "jobTitle":"Diyetisyen",
   "description":"Erciyes Üniversitesi Sağlık Bilimleri Fakültesi Beslenme ve Diyetetik Bölümü mezunu; klinik ve online diyetisyen.",
   "url":"https://www.onlinediyetisyen.online/",
-  "image":"https://www.onlinediyetisyen.online/images/tugba-seker-agac.jpg",
+  "image":"https://www.onlinediyetisyen.online/images/online-diyetisyen1.webp",
   "worksFor":{"@id":"https://www.onlinediyetisyen.online/#business"},
   "alumniOf":{"@type":"CollegeOrUniversity","name":"Erciyes Üniversitesi","department":"Sağlık Bilimleri Fakültesi Beslenme ve Diyetetik Bölümü"},
   "hasCredential":{"@type":"EducationalOccupationalCredential","credentialCategory":"degree","educationalLevel":"Lisans","name":"Beslenme ve Diyetetik Lisans Diploması","recognizedBy":{"@type":"CollegeOrUniversity","name":"Erciyes Üniversitesi"}},
@@ -491,6 +545,15 @@
 
 <body>
 
+<!-- ===== Açılış animasyonu (splash) ===== -->
+<div id="splash" aria-hidden="true">
+  <div class="splash-inner">
+    <div class="splash-emblem"><span class="splash-ring"></span><span class="splash-leaf">🥗</span></div>
+    <div class="splash-text">Online Diyetisyen</div>
+    <div class="splash-sub">Dyt. Tuğba Şeker Ağaç · sağlıklı yaşam yükleniyor…</div>
+  </div>
+</div>
+
 <!-- ===== Topbar ===== -->
 <div class="topbar">
   <div class="wrap">
@@ -505,9 +568,8 @@
 <!-- ===== Header ===== -->
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
-    <a href="#" class="logo">
-      <span class="mark">🥗</span>
-      <span>Online Diyetisyen<small>Dyt. Tuğba Şeker Ağaç</small></span>
+    <a href="#" class="logo" aria-label="Online Diyetisyen - Dyt. Tuğba Şeker Ağaç">
+      <img class="logo-img" src="https://www.onlinediyetisyen.online/images/online-diyetisyen-logo.png" alt="Online Diyetisyen - Dyt. Tuğba Şeker Ağaç" width="1024" height="304">
     </a>
     <nav class="menu" id="menu">
       <a href="#hizmetler">Hizmetler</a>
@@ -530,6 +592,13 @@
 
 <!-- ===== Hero ===== -->
 <section class="hero" style="padding-top:0">
+  <div class="hero-leaves" aria-hidden="true">
+    <span style="left:7%;animation-delay:0s">🥑</span>
+    <span style="left:24%;animation-delay:3.2s">🍎</span>
+    <span style="left:45%;animation-delay:1.4s">🥦</span>
+    <span style="left:67%;animation-delay:4.6s">🍋</span>
+    <span style="left:85%;animation-delay:2.2s">🥬</span>
+  </div>
   <div class="wrap">
     <div>
       <span class="hero-badge"><span class="star">★★★★★</span> 5,0 puan · 113 mutlu danışan</span>
@@ -547,9 +616,8 @@
     </div>
     <div class="hero-visual">
       <div class="hero-float hf-1"><span class="dot" style="background:#fff3e0">⚖️</span><div>Hedef Kilo<small>Sürdürülebilir sonuç</small></div></div>
-      <!-- GÖRSEL (stok – değiştir): hero görseli → images/online-diyetisyen-hero.webp -->
       <div class="hero-img-wrap">
-        <img src="https://loremflickr.com/1100/1000/healthy,food,salad,vegetables?lock=11" alt="Online diyetisyen ile sağlıklı ve dengeli beslenme" loading="eager" width="1100" height="1000" onerror="this.remove()">
+        <img src="https://www.onlinediyetisyen.online/images/online-diyetisyen-tugba.webp" alt="Online Diyetisyen Tuğba Şeker Ağaç beyaz önlüğüyle gülümserken" loading="eager" width="1512" height="1320" onerror="this.remove()">
         <div class="hero-img-cap">
           <div class="emoji">🍎</div>
           <h3>Size Özel Online Diyet</h3>
@@ -602,6 +670,9 @@
       <h2>Uzaktan (Online) Diyetisyen Hangi Hizmetleri Verir?</h2>
       <p>İhtiyacınız ne olursa olsun, size özel hazırlanan beslenme programlarıyla yanınızdayız. Hedefinize uygun hizmeti seçin, gerisini birlikte halledelim.</p>
     </div>
+    <figure class="info-figure">
+      <img src="https://www.onlinediyetisyen.online/images/online-diyetisyen.webp" alt="Online Diyetisyen Tuğba Şeker Ağaç ve sunduğu beslenme hizmetleri" loading="lazy" width="1341" height="1173" onerror="this.closest('figure').remove()">
+    </figure>
     <div class="serv-grid">
 
       <div class="serv-card"><div class="serv-ic">⚖️</div><h3>Kilo Verme Diyeti</h3>
@@ -667,6 +738,9 @@
       <span class="kicker">Online Diyetisyen Kimdir?</span>
       <h2>Online Diyetisyen Kimdir? Ne İş Yapar?</h2>
     </div>
+    <figure class="info-figure">
+      <img src="https://www.onlinediyetisyen.online/images/online-diyet-destegi.webp" alt="Online diyet desteği — kişiye özel beslenme süreci bilgilendirme görseli" loading="lazy" width="1426" height="1103" onerror="this.closest('figure').remove()">
+    </figure>
     <div class="prose">
       <p><strong>Online Diyetisyen;</strong> üniversitelerin Beslenme ve Diyetetik bölümünden mezun olarak beslenme alanında uzmanlaşan, danışanlarına ister klinik olarak ister online (uzaktan) hizmet veren sağlık uzmanıdır. İnsanların yaşam kalitesini artırmak, hastalıkların önlenmesine katkı sağlamak ve çeşitli sağlık sorunlarında kişiye özel beslenme planları hazırlamak online diyetisyenin temel görevleri arasındadır.</p>
       <p>Ülkemizin her şehrinde hem klinik diyetisyen hem de online diyetisyen bulunmaktadır. Bazı danışanlar diyetisyenle yüz yüze görüşme yerine uzaktan, yani online hizmet almak istemektedir. Bu noktada kendini geliştirmiş, uzaktan hizmet veren diyetisyenler, gerekli uzmanlık sertifikalarına sahip olduktan sonra danışanlarıyla çalışmaya başlayabilmektedir.</p>
@@ -701,8 +775,6 @@
 
 <!-- ===== Görsel bant (stok görsel – değiştir) ===== -->
 <section class="img-band" aria-label="Sağlıklı yaşam">
-  <!-- GÖRSEL (stok – değiştir): geniş yaşam tarzı görseli → images/saglikli-yasam-bant.webp -->
-  <img src="https://loremflickr.com/1600/520/healthy,lifestyle,fitness,vegetables?lock=31" alt="Sağlıklı yaşam ve dengeli beslenme" loading="lazy" width="1600" height="520" onerror="this.remove()">
   <div class="band-overlay"></div>
   <div class="band-inner">
     <h2>Sağlıklı yaşam, doğru bir adımla başlar</h2>
@@ -746,14 +818,12 @@
   <div class="wrap">
     <div class="about">
       <div class="about-photo">
-        <!-- GÖRSEL: Tuğba Şeker Ağaç fotoğrafını verince aşağıdaki avatar yerine <img> koyacağım -->
-        <div class="avatar">TŞ</div>
+        <img class="avatar-img" src="https://www.onlinediyetisyen.online/images/online-diyetisyen1.webp" alt="Diyetisyen Tuğba Şeker Ağaç beyaz önlüğüyle" width="1254" height="1254" loading="lazy" onerror="this.remove()">
         <h4>Dyt. Tuğba Şeker Ağaç</h4>
         <div class="role">Online &amp; Klinik Diyetisyen</div>
         <div style="font-size:.82rem;color:var(--muted);margin-top:5px">Erciyes Üniv. Beslenme ve Diyetetik</div>
         <div class="rate"><span class="star">★★★★★</span> 5,0 · 113 yorum</div>
-        <!-- GÖRSEL (stok – değiştir): Tuğba fotoğrafı veya sağlıklı öğün → images/tugba-seker-agac-diyetisyen.jpg -->
-        <div class="about-extra-img"><img src="https://loremflickr.com/640/400/healthy,meal,salad,nutrition?lock=14" alt="Diyetisyen kontrolünde sağlıklı ve dengeli öğün" loading="lazy" width="640" height="400" onerror="this.parentElement.remove()"></div>
+        <div class="about-extra-img"><img src="https://www.onlinediyetisyen.online/images/online-diyet-ofisi.webp" alt="Online diyetisyen Tuğba Şeker Ağaç'ın Adana'daki ofisi" loading="lazy" width="760" height="722" onerror="this.parentElement.remove()"></div>
       </div>
       <div>
         <span class="kicker" style="display:inline-block;color:var(--green-700);background:var(--green-100);font-weight:700;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;border-radius:999px;margin-bottom:16px">Hakkında</span>
@@ -1006,8 +1076,11 @@
           <a class="btn btn-wa btn-lg pulse" style="width:100%;justify-content:center" href="https://wa.me/905070361859?text=Merhaba%2C%20online%20diyet%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">💬 WhatsApp'tan Randevu Al</a>
         </div>
       </div>
-      <div class="map-box">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3186.411449535723!2d35.32047277594107!3d36.999979472190915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15288f003a35d1d3%3A0x49795b9186b5af14!2zRGl5ZXRpc3llbiBUdcSfYmEgxZ5la2VyIEHEn2HDpw!5e0!3m2!1str!2str!4v1782773704951!5m2!1str!2str" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Diyetisyen Tuğba Şeker Ağaç - Adana"></iframe>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <img class="contact-img" src="https://www.onlinediyetisyen.online/images/diyetisyen-tugba.webp" alt="Diyetisyen Tuğba Şeker Ağaç ofis tabelası - Seyhan/Adana" loading="lazy" width="952" height="868" onerror="this.remove()">
+        <div class="map-box" style="flex:1">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3186.411449535723!2d35.32047277594107!3d36.999979472190915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15288f003a35d1d3%3A0x49795b9186b5af14!2zRGl5ZXRpc3llbiBUdcSfYmEgxZ5la2VyIEHEn2HDpw!5e0!3m2!1str!2str!4v1782773704951!5m2!1str!2str" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Diyetisyen Tuğba Şeker Ağaç - Adana"></iframe>
+        </div>
       </div>
     </div>
   </div>
@@ -1059,6 +1132,8 @@
 </a>
 
 <script>
+  // splash: animasyon bitince DOM'dan kaldır (CSS zaten 1.5sn'de gizliyor)
+  setTimeout(function(){var s=document.getElementById('splash');if(s){s.remove();}},2300);
   // year
   document.getElementById('yil').textContent = new Date().getFullYear();
   // mobile menu
