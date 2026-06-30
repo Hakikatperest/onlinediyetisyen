@@ -149,8 +149,8 @@
   .hero-img-cap h3{font-size:1.3rem;margin:4px 0 6px}
   .hero-img-cap p{opacity:.95;font-size:.93rem}
   .about-extra-img{margin-top:20px;border-radius:16px;overflow:hidden;border:1px solid var(--line);
-    box-shadow:var(--shadow-sm);aspect-ratio:4/3;background:var(--green-100)}
-  .about-extra-img img{width:100%;height:100%;object-fit:cover;display:block}
+    box-shadow:var(--shadow-sm);background:var(--green-100)}
+  .about-extra-img img{width:100%;height:auto;display:block}
   .img-band{position:relative;min-height:330px;display:grid;place-items:center;text-align:center;
     color:#fff;overflow:hidden;background:var(--green-700)}
   .img-band>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -165,7 +165,7 @@
   .info-figure img{width:100%;height:auto;display:block}
   .avatar-img{width:150px;height:150px;border-radius:50%;object-fit:cover;margin:0 auto 16px;
     border:4px solid #fff;box-shadow:var(--shadow-sm);display:block}
-  .contact-img{width:100%;max-height:240px;object-fit:cover;border-radius:var(--radius);
+  .contact-img{width:100%;height:auto;border-radius:var(--radius);
     border:1px solid var(--line);box-shadow:var(--shadow-sm);display:block}
   .hero-float{position:absolute;z-index:3;background:#fff;border-radius:16px;padding:14px 18px;box-shadow:var(--shadow);
     display:flex;align-items:center;gap:12px;font-weight:700}
@@ -252,6 +252,18 @@
   .cmp td.on{background:#eef9f1;color:#16623e;font-weight:600}
   .cmp td.kl{color:#5a6b62}
   .cmp-note{font-size:.88rem;color:var(--muted);margin-top:4px}
+  @media(max-width:720px){
+    .cmp-wrap{overflow-x:visible}
+    .cmp{min-width:0;border:0}
+    .cmp thead{display:none}
+    .cmp tbody,.cmp tr,.cmp td{display:block;width:100%}
+    .cmp tr{border:1px solid var(--line);border-radius:12px;margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow-sm)}
+    .cmp tr:last-child{margin-bottom:0}
+    .cmp td{border-bottom:0;padding:11px 16px}
+    .cmp td.feat{background:var(--green-900);color:#fff;width:auto}
+    .cmp td.on::before{content:"🟢 Online — ";font-weight:700}
+    .cmp td.kl::before{content:"🏥 Klinik — ";font-weight:700}
+  }
 
   /* How it works */
   .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
@@ -276,6 +288,23 @@
   .mini-prices{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:34px}
   .mini-pill{background:var(--green-50);border:1px solid var(--line);border-radius:14px;padding:14px 22px;font-weight:700;color:var(--green-900)}
   .mini-pill span{display:block;font-size:.8rem;color:var(--muted);font-weight:600}
+  /* Bilgilendirici fiyat tablosu (Türkiye ortalaması) */
+  .price-table-wrap{max-width:680px;margin:0 auto}
+  .ptable{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);
+    border-radius:16px;overflow:hidden;background:#fff;box-shadow:var(--shadow-sm)}
+  .ptable th,.ptable td{padding:15px 20px;text-align:left;border-bottom:1px solid var(--line)}
+  .ptable thead th{background:var(--green-900);color:#fff;font-weight:700;font-size:.95rem}
+  .ptable thead th:last-child{text-align:right}
+  .ptable tbody td:first-child{font-weight:600;color:var(--green-900)}
+  .ptable tbody td:last-child{text-align:right;font-weight:800;color:var(--green-700);white-space:nowrap}
+  .ptable tbody tr:last-child td{border-bottom:0}
+  .ptable tbody tr:hover td{background:var(--green-50)}
+  .price-highlight{max-width:680px;margin:22px auto 0;background:linear-gradient(135deg,var(--green-600),var(--green-800));
+    color:#fff;border-radius:16px;padding:24px 26px;text-align:center;box-shadow:var(--shadow)}
+  .price-highlight .ph-badge{display:inline-block;background:rgba(255,255,255,.18);border-radius:999px;
+    padding:6px 15px;font-size:.78rem;font-weight:800;letter-spacing:.05em;margin-bottom:13px}
+  .price-highlight p{font-size:1.06rem;line-height:1.65}
+  .price-highlight strong{color:#fff}
 
   /* About */
   .about{display:grid;grid-template-columns:.9fr 1.1fr;gap:46px;align-items:center}
@@ -550,7 +579,7 @@
   "mainEntity":[
     {"@type":"Question","name":"Online diyetisyen nedir ve nasıl çalışır?","acceptedAnswer":{"@type":"Answer","text":"Online diyetisyen, Beslenme ve Diyetetik bölümü mezunu olup danışanlarına uzaktan hizmet veren sağlık uzmanıdır. Süreç tanışma ve analizle başlar; size özel beslenme programı hazırlanır ve öğünleriniz WhatsApp, sesli ya da görüntülü görüşmeyle düzenli olarak takip edilir."}},
     {"@type":"Question","name":"Online diyet gerçekten etkili mi?","acceptedAnswer":{"@type":"Answer","text":"Evet. Program kişiye özel hazırlandığı ve öğünler düzenli takip edildiği sürece online diyet, yüz yüze diyet kadar etkilidir. Üstelik diyetisyene 7/24 ulaşabilmeniz, sürece uyumu ve motivasyonu artırır."}},
-    {"@type":"Question","name":"Online diyetisyen fiyatları ne kadar?","acceptedAnswer":{"@type":"Answer","text":"Türkiye'de ortalama fiyatlar; ilk görüşme 1.000 TL, kontrol 500 TL, 1 aylık paket 3.000 TL, 3 aylık paket 8.000 TL ve 6 aylık paket 15.000 TL civarındadır. Fiyatlar diyetisyene göre değişir; size özel paket için WhatsApp'tan ulaşabilirsiniz."}},
+    {"@type":"Question","name":"Online diyetisyen fiyatları ne kadar?","acceptedAnswer":{"@type":"Answer","text":"Türkiye'de ortalama fiyatlar; kontrol görüşmesi 1.000 TL, 1 aylık paket 3.000 TL, 3 aylık paket 8.000 TL ve 6 aylık paket 15.000 TL civarındadır. Fiyatlar diyetisyene göre değişir. Diyetisyen Tuğba Şeker Ağaç kontrol görüşmesi ücreti almaz ve ön görüşme ücretsizdir."}},
     {"@type":"Question","name":"Diyet sürecinde aç kalır mıyım, yasak besin var mı?","acceptedAnswer":{"@type":"Answer","text":"Hayır. Yasaksız ve sürdürülebilir bir beslenme anlayışı esastır; sevdiğiniz yiyecekler dengeli şekilde programınıza dahil edilir. Amaç aç bırakmak değil, doğru ve kalıcı alışkanlıklar kazandırmaktır."}},
     {"@type":"Question","name":"Türkiye'nin her ilinden online diyet hizmeti alabilir miyim?","acceptedAnswer":{"@type":"Answer","text":"Evet. İnternet bağlantısı olan herkes, bulunduğu ilden bağımsız olarak online diyet hizmeti alabilir. Nerede olduğunuzun önemi yoktur; telefonunuzla diyetisyeninize ulaşmanız yeterlidir."}},
     {"@type":"Question","name":"Diyabet, PCOS veya insülin direncinde online beslenme desteği alabilir miyim?","acceptedAnswer":{"@type":"Answer","text":"Evet. Diyabet, insülin direnci, PCOS, tiroit ve benzeri durumlarda doktor tedavinizi destekleyen, kişiye özel beslenme programları hazırlanır."}},
@@ -668,10 +697,8 @@
       <a href="#yorumlar">Yorumlar</a>
       <a href="#sss">S.S.S.</a>
       <a href="#iletisim">İletişim</a>
-      <a class="btn btn-wa" href="https://wa.me/905070361859?text=Merhaba%2C%20online%20diyet%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">WhatsApp</a>
     </nav>
     <div class="nav-cta">
-      <a class="btn btn-wa pulse" href="https://wa.me/905070361859?text=Merhaba%2C%20online%20diyet%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">💬 Randevu Al</a>
       <button class="burger" id="burger" aria-label="Menü"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -971,23 +998,24 @@
     </div>
     <p class="price-note">Klinik diyetisyenlerden farklı olarak online diyetisyenler, diyet programınızı daha ekonomik fiyatlarla yönetebilir. Aşağıdaki rakamlar Türkiye'deki <strong>ortalama</strong> online diyetisyen fiyatlarıdır; sabit değildir ve her diyetisyenin kendine özgü program fiyatı olabilir. KDV ve detaylar dahil, size özel paket için diyetisyeninizle netleştirin.</p>
 
-    <div class="mini-prices">
-      <div class="mini-pill">1.000 TL<span>İlk Görüşme</span></div>
-      <div class="mini-pill">500 TL<span>Kontrol</span></div>
-    </div>
-
-    <div class="price-grid">
-      <div class="price-card"><h3>1 Aylık Online Paket</h3><div class="amt">3.000 <span>TL</span></div>
-        <p class="desc">Hızlı başlangıç isteyenler için kişiye özel program ve aylık takip.</p>
-        <a class="btn btn-primary" style="width:100%;justify-content:center" href="https://wa.me/905070361859?text=1%20ayl%C4%B1k%20online%20diyet%20paketi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">Bilgi Al</a></div>
-
-      <div class="price-card feat"><span class="tag">EN POPÜLER</span><h3>3 Aylık Paket</h3><div class="amt">8.000 <span>TL</span></div>
-        <p class="desc">Kalıcı sonuç için ideal süre. Daha avantajlı fiyat ve sürekli takip.</p>
-        <a class="btn btn-wa" style="width:100%;justify-content:center" href="https://wa.me/905070361859?text=3%20ayl%C4%B1k%20online%20diyet%20paketi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">💬 WhatsApp'tan Başla</a></div>
-
-      <div class="price-card"><h3>6 Aylık Paket</h3><div class="amt">15.000 <span>TL</span></div>
-        <p class="desc">Sağlıklı yaşamı alışkanlığa dönüştürmek isteyenler için en avantajlı paket.</p>
-        <a class="btn btn-primary" style="width:100%;justify-content:center" href="https://wa.me/905070361859?text=6%20ayl%C4%B1k%20online%20diyet%20paketi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">Bilgi Al</a></div>
+    <div class="price-table-wrap">
+      <table class="ptable">
+        <thead><tr><th>Hizmet</th><th>Türkiye Ortalaması</th></tr></thead>
+        <tbody>
+          <tr><td>Kontrol görüşmesi</td><td>~1.000 TL</td></tr>
+          <tr><td>1 aylık online paket</td><td>~3.000 TL</td></tr>
+          <tr><td>3 aylık paket</td><td>~8.000 TL</td></tr>
+          <tr><td>6 aylık paket</td><td>~15.000 TL</td></tr>
+        </tbody>
+      </table>
+      <p class="cmp-note" style="text-align:center;margin-top:14px">Bu rakamlar Türkiye genelindeki ortalama fiyatları yansıtır; diyetisyene, programın içeriğine ve süresine göre değişebilir.</p>
+      <div class="price-highlight">
+        <span class="ph-badge">💚 TUĞBA HANIM'IN FARKI</span>
+        <p>Türkiye'deki birçok diyetisyen <strong>kontrol görüşmesi</strong> için ayrıca ücret alırken, Diyetisyen Tuğba Şeker Ağaç bu ücreti <strong>almaz</strong>. Üstelik ilk <strong>ön görüşme tamamen ÜCRETSİZDİR</strong> — siz daha başlamadan, size özel yol haritanızı çıkarır.</p>
+      </div>
+      <div style="text-align:center;margin-top:24px">
+        <a class="btn btn-wa pulse" href="https://wa.me/905070361859?text=Merhaba%2C%20%C3%BCcretsiz%20%C3%B6n%20g%C3%B6r%C3%BC%C5%9Fme%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">💬 Ücretsiz Ön Görüşme İçin Yazın</a>
+      </div>
     </div>
   </div>
 </section>
@@ -1002,7 +1030,7 @@
         <div class="role">Online &amp; Klinik Diyetisyen</div>
         <div style="font-size:.82rem;color:var(--muted);margin-top:5px">Erciyes Üniv. Beslenme ve Diyetetik</div>
         <div class="rate"><span class="star">★★★★★</span> 5,0 · 113 yorum</div>
-        <div class="about-extra-img"><img src="https://www.onlinediyetisyen.online/images/online-diyet-ofisi.webp" alt="Online diyetisyen Tuğba Şeker Ağaç'ın Adana'daki ofisi" loading="lazy" width="760" height="722" onerror="this.parentElement.remove()"></div>
+        <div class="about-extra-img"><img src="https://www.onlinediyetisyen.online/images/diyetisyen-tugba.webp" alt="Diyetisyen Tuğba Şeker Ağaç ofis tabelası - Seyhan/Adana" loading="lazy" width="952" height="868" onerror="this.parentElement.remove()"></div>
       </div>
       <div>
         <span class="kicker" style="display:inline-block;color:var(--green-700);background:var(--green-100);font-weight:700;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;border-radius:999px;margin-bottom:16px">Hakkında</span>
@@ -1195,7 +1223,7 @@
         <div class="faq-a"><div>Evet. Program kişiye özel hazırlandığı ve öğünler düzenli takip edildiği sürece online diyet, yüz yüze diyet kadar etkilidir. Üstelik diyetisyeninize 7/24 ulaşabilmeniz, sürece uyumu ve motivasyonu artırarak sonuçları olumlu etkiler.</div></div></div>
 
       <div class="faq-item"><button class="faq-q">Online diyetisyen fiyatları ne kadar?<span class="ic">+</span></button>
-        <div class="faq-a"><div>Türkiye'de ortalama fiyatlar; ilk görüşme 1.000 TL, kontrol 500 TL, 1 aylık paket 3.000 TL, 3 aylık paket 8.000 TL ve 6 aylık paket 15.000 TL civarındadır. Bu fiyatlar sabit değildir ve diyetisyene göre değişebilir. Size özel güncel paket için WhatsApp'tan ulaşabilirsiniz.</div></div></div>
+        <div class="faq-a"><div>Türkiye'de ortalama fiyatlar; kontrol görüşmesi 1.000 TL, 1 aylık paket 3.000 TL, 3 aylık paket 8.000 TL ve 6 aylık paket 15.000 TL civarındadır. Bu fiyatlar sabit değildir, diyetisyene göre değişebilir. Diyetisyen Tuğba Şeker Ağaç ise <strong>kontrol görüşmesi ücreti almaz</strong> ve ön görüşmeyi <strong>ücretsiz</strong> sağlar. Güncel paket bilgisi için WhatsApp'tan ulaşabilirsiniz.</div></div></div>
 
       <div class="faq-item"><button class="faq-q">Diyet sürecinde aç kalır mıyım, yasak besin var mı?<span class="ic">+</span></button>
         <div class="faq-a"><div>Hayır. Yasaksız ve sürdürülebilir bir beslenme anlayışı esastır; sevdiğiniz yiyecekler dengeli şekilde programınıza dahil edilir. Amaç sizi aç bırakmak değil, doğru ve kalıcı beslenme alışkanlıkları kazandırmaktır.</div></div></div>
@@ -1268,7 +1296,7 @@
         </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:16px">
-        <img class="contact-img" src="https://www.onlinediyetisyen.online/images/diyetisyen-tugba.webp" alt="Diyetisyen Tuğba Şeker Ağaç ofis tabelası - Seyhan/Adana" loading="lazy" width="952" height="868" onerror="this.remove()">
+        <img class="contact-img" src="https://www.onlinediyetisyen.online/images/online-diyet-ofisi.webp" alt="Online diyetisyen Tuğba Şeker Ağaç'ın Adana'daki ofisi" loading="lazy" width="760" height="722" onerror="this.remove()">
         <div class="map-box" style="flex:1">
           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3186.411449535723!2d35.32047277594107!3d36.999979472190915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15288f003a35d1d3%3A0x49795b9186b5af14!2zRGl5ZXRpc3llbiBUdcSfYmEgxZ5la2VyIEHEn2HDpw!5e0!3m2!1str!2str!4v1782773704951!5m2!1str!2str" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Diyetisyen Tuğba Şeker Ağaç - Adana"></iframe>
         </div>
@@ -1351,4 +1379,3 @@
 
 </body>
 </html>
-
