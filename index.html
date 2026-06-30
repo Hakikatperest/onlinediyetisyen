@@ -199,8 +199,8 @@
   .edu-box{background:var(--green-50);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:20px 0}
   .edu-box h4{color:var(--green-900);font-size:1.05rem;margin-bottom:13px;display:flex;align-items:center;gap:9px}
   .edu-box ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-  .edu-box li{display:flex;align-items:flex-start;gap:9px;font-size:.94rem;color:#374a40;line-height:1.55}
-  .edu-box li::before{content:"✓";color:var(--green-600);font-weight:800;flex:none}
+  .edu-box li{position:relative;padding-left:25px;font-size:.94rem;color:#374a40;line-height:1.55}
+  .edu-box li::before{content:"✓";position:absolute;left:0;top:0;color:var(--green-600);font-weight:800}
 
   /* Services */
   .serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
@@ -236,8 +236,8 @@
   .guide-item p:last-child{margin-bottom:0}
   .guide-item strong{color:var(--green-900)}
   .guide-item ul{list-style:none;margin:4px 0 14px;display:flex;flex-direction:column;gap:9px}
-  .guide-item li{display:flex;gap:10px;align-items:flex-start;color:#374a40;line-height:1.55}
-  .guide-item li::before{content:"✓";color:var(--green-600);font-weight:800;flex:none}
+  .guide-item li{position:relative;padding-left:26px;color:#374a40;line-height:1.55}
+  .guide-item li::before{content:"✓";position:absolute;left:0;top:0;color:var(--green-600);font-weight:800}
   .guide-cta{text-align:center;margin-top:28px}
   @media(max-width:720px){.guide-item{padding:22px 20px}.guide-item h3{font-size:1.12rem}}
   /* Karşılaştırma tablosu */
