@@ -40,6 +40,7 @@
 <style>
   :root{
     --green-900:#11402b;
+    --green-800:#175e3c;
     --green-700:#1f7a4d;
     --green-600:#27955d;
     --green-500:#34a96b;
@@ -222,6 +223,20 @@
   .bio-quote::before{content:"\201C";position:absolute;left:18px;top:10px;font-size:3rem;color:var(--green-500);
     font-family:Georgia,serif;line-height:1}
   .bio-quote cite{display:block;margin-top:12px;font-style:normal;font-weight:700;color:var(--green-900);font-size:.9rem}
+
+  /* Rehber / guide */
+  .guide{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+  .guide-item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 28px;box-shadow:var(--shadow-sm)}
+  .guide-item h3{color:var(--green-900);font-size:1.22rem;margin-bottom:12px;display:flex;align-items:center;gap:11px;line-height:1.3}
+  .guide-item h3 .gi{flex:none;width:38px;height:38px;border-radius:11px;background:var(--green-100);display:grid;place-items:center;font-size:1.15rem}
+  .guide-item p{color:#374a40;margin-bottom:12px;font-size:1.02rem;line-height:1.75}
+  .guide-item p:last-child{margin-bottom:0}
+  .guide-item strong{color:var(--green-900)}
+  .guide-item ul{list-style:none;margin:4px 0 14px;display:flex;flex-direction:column;gap:9px}
+  .guide-item li{display:flex;gap:10px;align-items:flex-start;color:#374a40;line-height:1.55}
+  .guide-item li::before{content:"✓";color:var(--green-600);font-weight:800;flex:none}
+  .guide-cta{text-align:center;margin-top:28px}
+  @media(max-width:720px){.guide-item{padding:22px 20px}.guide-item h3{font-size:1.12rem}}
 
   /* How it works */
   .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
@@ -669,14 +684,15 @@
         <a href="#hizmetler"><span class="tn">1</span> Hizmetler</a>
         <a href="#ne-is-yapar"><span class="tn">2</span> Ne İş Yapar?</a>
         <a href="#nasil"><span class="tn">3</span> Nasıl Çalışır?</a>
-        <a href="#fiyatlar"><span class="tn">4</span> Fiyatlar</a>
-        <a href="#hakkinda"><span class="tn">5</span> Hakkında</a>
-        <a href="#tavsiye"><span class="tn">6</span> Tavsiye</a>
-        <a href="#yorumlar"><span class="tn">7</span> Danışan Yorumları</a>
-        <a href="#videolar"><span class="tn">8</span> Videolar</a>
-        <a href="#diyetisyen-kimdir"><span class="tn">9</span> Diyetisyen Kimdir?</a>
-        <a href="#sss"><span class="tn">10</span> Sıkça Sorulan Sorular</a>
-        <a href="#iletisim"><span class="tn">11</span> İletişim</a>
+        <a href="#rehber"><span class="tn">4</span> Merak Edilenler</a>
+        <a href="#fiyatlar"><span class="tn">5</span> Fiyatlar</a>
+        <a href="#hakkinda"><span class="tn">6</span> Hakkında</a>
+        <a href="#tavsiye"><span class="tn">7</span> Tavsiye</a>
+        <a href="#yorumlar"><span class="tn">8</span> Danışan Yorumları</a>
+        <a href="#videolar"><span class="tn">9</span> Videolar</a>
+        <a href="#diyetisyen-kimdir"><span class="tn">10</span> Diyetisyen Kimdir?</a>
+        <a href="#sss"><span class="tn">11</span> Sıkça Sorulan Sorular</a>
+        <a href="#iletisim"><span class="tn">12</span> İletişim</a>
       </div>
     </nav>
   </div>
@@ -789,6 +805,78 @@
       <div class="step"><div class="n">2</div><h3>Analiz &amp; Ölçüm</h3><p>Sağlık geçmişiniz, alışkanlıklarınız ve vücut analiziniz detaylıca değerlendirilir.</p></div>
       <div class="step"><div class="n">3</div><h3>Kişiye Özel Program</h3><p>Size özel, yasaksız ve sürdürülebilir beslenme programınız hazırlanır.</p></div>
       <div class="step"><div class="n">4</div><h3>Takip &amp; Destek</h3><p>Öğünlerinizi fotoğrafla paylaşın; 7/24 takip ve motivasyonla hedefe birlikte yürüyelim.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Online Diyet Rehberi (Merak Edilenler) ===== -->
+<section id="rehber" style="background:var(--green-50)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Online Diyet Rehberi</span>
+      <h2>Online Diyet Hakkında Merak Ettiğiniz Her Şey</h2>
+      <p>Online diyete başlamadan önce kafanızda soru işaretleri olması çok normal. İşte en çok merak edilen başlıkları, sizin için tek tek ve içtenlikle yanıtladık. 👇</p>
+    </div>
+    <div class="guide">
+
+      <article class="guide-item">
+        <h3><span class="gi">💻</span> Diyetisyenler online çalışabilir mi?</h3>
+        <p>Tabii ki çalışabilir, hem de gayet başarılı bir şekilde! Eskiden diyet demek, her hafta diyetisyenin kapısını çalmak demekti. Ama artık dünya değişti; elinizdeki telefon, sizi alanında uzman bir diyetisyene saniyeler içinde bağlıyor.</p>
+        <p>Bir diyetisyenin sizi tanıması, ölçülerinizi alması, size özel bir beslenme programı hazırlaması ve her gün öğünlerinizi takip etmesi için aynı odada olmanıza gerek yok. Görüntülü görüşme, sesli arama ve WhatsApp sayesinde bütün bu süreç uzaktan, eksiksiz şekilde yürüyebiliyor. Yani kısacası: <strong>Evet, diyetisyenler online çalışabilir</strong> ve bugün binlerce danışan bu yöntemle sağlığına kavuşuyor.</p>
+      </article>
+
+      <article class="guide-item">
+        <h3><span class="gi">🎓</span> Kimler online diyetisyenlik yapabilir?</h3>
+        <p>Burası çok önemli, lütfen dikkatle okuyun. Online diyetisyenlik yapabilmek için her şeyden önce gerçekten <strong>diyetisyen</strong> olmak gerekir. Yani üniversitelerin <strong>Beslenme ve Diyetetik</strong> bölümünden mezun olup diyetisyen unvanını almış olmak şarttır.</p>
+        <p>Son yıllarda sosyal medyada "diyet koçu", "beslenme danışmanı", "fit yaşam uzmanı" gibi unvanlarla karşınıza çıkan ama aslında bu eğitimi almamış kişiler var. Sağlığınızı asla bu kadar hafife almayın! Yanlış bir beslenme programı, kilo aldırmaktan çok daha ciddi sonuçlara yol açabilir.</p>
+        <p>Unutmayın: Diyetisyeninizin diplomasını ve unvanını sormak sizin en doğal hakkınız. Gerçek bir uzman bunu size göstermekten asla çekinmez.</p>
+      </article>
+
+      <article class="guide-item">
+        <h3><span class="gi">🔍</span> Online Diyetisyen Seçerken Nelere Dikkat Edilmeli?</h3>
+        <p>Doğru diyetisyeni seçmek, aslında sürecin yarısıdır. İşte seçim yaparken gözünüzden kaçmaması gereken başlıklar:</p>
+        <ul>
+          <li><strong>Diploması ve unvanı:</strong> Gerçekten Beslenme ve Diyetetik mezunu mu?</li>
+          <li><strong>Ulaşılabilirlik:</strong> Aklınıza bir şey takıldığında kolayca ulaşabiliyor musunuz?</li>
+          <li><strong>Gerçek yorumlar:</strong> Google ve sosyal medyadaki danışan yorumlarına mutlaka bakın.</li>
+          <li><strong>Kişiye özel program:</strong> Size mi özel hazırlanıyor, yoksa herkese aynı hazır liste mi veriliyor?</li>
+          <li><strong>Düzenli takip:</strong> Öğünleriniz takip ediliyor mu, yoksa listeyi verip kayıplara mı karışıyor?</li>
+          <li><strong>Samimiyet ve sabır:</strong> Sizi yargılamadan, motive ederek mi ilerliyor?</li>
+          <li><strong>Şeffaf fiyat:</strong> Paketler ve ücretler en baştan net mi?</li>
+        </ul>
+        <p>Bu maddelerin hepsine gönül rahatlığıyla "evet" diyebiliyorsanız, doğru adrestesiniz demektir. 🙂</p>
+      </article>
+
+      <article class="guide-item">
+        <h3><span class="gi">⚖️</span> Online diyet ile kilo alıp verebilir misiniz?</h3>
+        <p>Kesinlikle evet, hem de ikisini de! Online diyet yalnızca kilo vermek isteyenler için değil; kilo almakta zorlanan, bir türlü istediği forma ulaşamayan herkes için de var.</p>
+        <p>Kilo vermek istiyorsanız; vücudunuzu yormadan, aç bırakmadan ve sevdiğiniz yiyeceklerden tamamen vazgeçmeden bir program hazırlanır. Kilo almak istiyorsanız da iştahınızı destekleyen, sağlıklı ve besin değeri yüksek bir beslenme planıyla ideal kilonuza güvenle ulaşırsınız. Yeter ki süreci diyetisyeninizle birlikte, sabırla yürütün.</p>
+      </article>
+
+      <article class="guide-item">
+        <h3><span class="gi">📅</span> Online diyet kaç gün sürer?</h3>
+        <p>Aslında bu sorunun herkes için geçerli tek bir cevabı yok. Çünkü her vücut, her hedef ve her yaşam tarzı birbirinden farklıdır.</p>
+        <p>Sağlıklı bir diyette amaç, kısa sürede çok kilo vermek değil; <strong>kalıcı ve sürdürülebilir</strong> sonuçlar elde etmektir. Genel olarak haftada yarım ila bir kilo arası bir değişim, hem sağlıklı hem de kalıcıdır. Bu yüzden çoğu danışan aylık paketlerle çalışır ve gerçek sonuçları görmek için genellikle 3 aylık bir süreç önerilir.</p>
+        <p>Ama işin en güzel tarafı şu: Bu süreç sonunda sadece kilo vermiş olmazsınız; doğru beslenmeyi de öğrenir ve bunu bir ömür boyu yanınızda taşırsınız. İşte asıl kazanç budur. 💚</p>
+      </article>
+
+      <article class="guide-item">
+        <h3><span class="gi">🆚</span> Online Diyetisyen ile Klinik Diyetisyen Arasındaki Farklar</h3>
+        <p>İlk olarak şunu net söyleyelim: İçerik, bilgi ve uzmanlık açısından ikisi arasında hiçbir fark yoktur. Aynı diyetisyen, aynı bilgiyle size hizmet eder; tek fark görüşmenin nerede yapıldığıdır.</p>
+        <p>Klinik diyetisyende randevu alır, yola çıkar, trafiğe takılır ve sıra beklersiniz. Online diyetisyende ise bütün bu yükten kurtulursunuz; nerede olursanız olun telefonunuzu açıp diyetisyeninize ulaşabilirsiniz. Üstelik online hizmet çoğu zaman daha ekonomiktir ve diyetisyeninize çok daha hızlı ulaşırsınız.</p>
+        <p>Kısacası online diyet; size zamandan, yoldan ve bütçeden tasarruf ettirirken, ihtiyacınız olan profesyonel desteği bir adım öteden ayağınıza getirir.</p>
+      </article>
+
+      <article class="guide-item">
+        <h3><span class="gi">🏆</span> Türkiye'nin En Uzman Diyetisyenleri ve Online Hizmet</h3>
+        <p>Türkiye'de alanında gerçekten değerli, ismini hepimizin duyduğu diyetisyenler var. Televizyon programlarından, kitaplardan ve gazetelerden tanıdığımız <strong>Dilara Koçak</strong>, <strong>Taylan Kümeli</strong> gibi isimler bunların başında geliyor. Kendileri bu mesleğe çok büyük katkılar sundu, saygıyla anıyoruz.</p>
+        <p>Ancak gelin bir gerçeği konuşalım: Bu tanınmış isimlere birebir, kişisel bir online takip için ulaşmak çoğu zaman hem çok zordur hem de oldukça maliyetlidir. Randevuları aylar öncesinden dolu olabilir, çoğunlukla kliniklerinde ekipleri üzerinden ilerlerler ve aradığınız o sıcak, birebir ilgiyi bulmak güçleşir.</p>
+        <p>İşte tam burada, hem alanında uzman olan hem de <strong>online hizmeti gerçekten ön planda tutan</strong> bir isim öne çıkıyor: <strong>Diyetisyen Tuğba Şeker Ağaç.</strong> Türkiye'nin neresinde olursanız olun size zaman ayıran, her öğününüzle tek tek ilgilenen ve sizi asla yalnız bırakmayan bir yol arkadaşı arıyorsanız, gönül rahatlığıyla başvurabilirsiniz. 💚</p>
+      </article>
+
+    </div>
+    <div class="guide-cta">
+      <a class="btn btn-wa btn-lg pulse" href="https://wa.me/905070361859?text=Merhaba%2C%20online%20diyet%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">💬 Tuğba Hanım'a Ulaşın</a>
     </div>
   </div>
 </section>
