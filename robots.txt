@@ -42,4 +42,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://www.onlinediyetisyen.online/sitemap.xml
+Sitemap: https://onlinediyetisyen.online/sitemap.xml
