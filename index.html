@@ -145,8 +145,11 @@
   .hero-card-main h3{font-size:1.4rem;margin:12px 0 6px}
   .hero-card-main p{opacity:.92;font-size:.97rem}
   .hero-img-wrap{position:relative;border-radius:26px;overflow:hidden;box-shadow:var(--shadow);
-    aspect-ratio:11/10;background:linear-gradient(150deg,var(--green-600),var(--green-800))}
-  .hero-img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    background:linear-gradient(150deg,var(--green-600),var(--green-800))}
+  /* Görsel normal akışta (in-flow); sarmalayıcı yüksekliği görselden gelir. Böylece
+     aspect-ratio desteklenmese/render sorunu olsa bile mobilde görsel her zaman görünür.
+     Modern tarayıcıda görünüm birebir aynı (11/10 kırpma). */
+  .hero-img-wrap img{display:block;width:100%;height:auto;aspect-ratio:11/10;object-fit:cover}
   .hero-img-cap{position:absolute;left:0;right:0;bottom:0;padding:24px 26px 22px;color:#fff;
     background:linear-gradient(to top,rgba(17,64,43,.95),rgba(17,64,43,.45) 60%,transparent)}
   .hero-img-cap .emoji{font-size:1.9rem}
