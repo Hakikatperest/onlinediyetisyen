@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<title>Görsel Yükleme Paneli — Online Diyetisyen</title>
+<style>
+  :root{
+    --bg:#0f172a;--card:#ffffff;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;
+    --green:#16a34a;--green-d:#15803d;--blue:#2563eb;--red:#dc2626;--amber:#d97706;
+    --soft:#f8fafc;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(160deg,#0f172a,#1e293b);min-height:100vh;color:var(--ink);padding:24px 14px 60px}
+  .wrap{max-width:760px;margin:0 auto}
+  .head{text-align:center;color:#fff;margin-bottom:22px}
+  .head h1{margin:0 0 6px;font-size:22px;font-weight:800;letter-spacing:-.02em}
+  .head p{margin:0;color:#94a3b8;font-size:13.5px}
+  .card{background:var(--card);border-radius:16px;padding:22px;margin-bottom:16px;box-shadow:0 12px 34px -14px rgba(0,0,0,.5)}
+  .card h2{margin:0 0 4px;font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .card .hint{color:var(--muted);font-size:12.5px;margin:0 0 14px}
+  label{display:block;font-size:12.5px;font-weight:700;color:#334155;margin:12px 0 5px}
+  input[type=text],input[type=password],textarea,select{
+    width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:inherit;color:var(--ink);background:#fff}
+  input:focus,textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+  textarea{resize:vertical;min-height:60px}
+  .row{display:flex;gap:12px;flex-wrap:wrap}
+  .row>div{flex:1;min-width:130px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;padding:12px 18px;font-size:14px;font-weight:700;cursor:pointer;transition:transform .15s,opacity .15s;font-family:inherit}
+  .btn:hover{transform:translateY(-1px)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  .btn-primary{background:var(--green);color:#fff;width:100%;padding:14px;font-size:15px}
+  .btn-primary:hover{background:var(--green-d)}
+  .btn-ghost{background:var(--soft);color:#334155;border:1px solid var(--line)}
+  .btn-sm{padding:9px 13px;font-size:13px}
+  .drop{border:2px dashed #cbd5e1;border-radius:14px;padding:30px 16px;text-align:center;color:var(--muted);cursor:pointer;transition:.15s;background:var(--soft)}
+  .drop.over{border-color:var(--blue);background:#eff6ff;color:var(--blue)}
+  .drop b{color:var(--ink);display:block;font-size:14.5px;margin-bottom:3px}
+  .drop small{font-size:12px}
+  .preview{display:none;margin-top:16px}
+  .preview.on{display:block}
+  .preview img{max-width:100%;max-height:280px;border-radius:12px;border:1px solid var(--line);display:block;margin:0 auto 12px}
+  .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px}
+  .stat{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
+  .stat .k{font-size:11px;color:var(--muted);font-weight:600}
+  .stat .v{font-size:15px;font-weight:800;margin-top:2px}
+  .stat .v.good{color:var(--green-d)}
+  .range{display:flex;align-items:center;gap:10px}
+  .range input[type=range]{flex:1}
+  .range .val{font-weight:800;font-size:13px;min-width:38px;text-align:right}
+  .out{display:none;margin-top:4px}
+  .out.on{display:block}
+  .code{background:#0f172a;color:#e2e8f0;border-radius:10px;padding:13px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;word-break:break-all;line-height:1.6;white-space:pre-wrap}
+  .log{font-size:12.5px;border-radius:10px;padding:11px 13px;margin-top:10px;display:none;line-height:1.5}
+  .log.on{display:block}
+  .log.ok{background:#f0fdf4;color:var(--green-d);border:1px solid #bbf7d0}
+  .log.err{background:#fef2f2;color:var(--red);border:1px solid #fecaca}
+  .log.info{background:#eff6ff;color:var(--blue);border:1px solid #bfdbfe}
+  .badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:#dcfce7;color:var(--green-d)}
+  .badge.off{background:#fee2e2;color:var(--red)}
+  .foot{text-align:center;color:#64748b;font-size:11.5px;margin-top:18px}
+  .foot a{color:#94a3b8}
+  a.link{color:var(--blue);font-weight:700;text-decoration:none}
+  a.link:hover{text-decoration:underline}
+  /* gate */
+  .gate{position:fixed;inset:0;background:linear-gradient(160deg,#0f172a,#1e293b);display:flex;align-items:center;justify-content:center;z-index:999;padding:20px}
+  .gate .box{background:#fff;border-radius:16px;padding:30px 26px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+  .gate h3{margin:0 0 4px;font-size:18px}
+  .gate p{margin:0 0 16px;color:var(--muted);font-size:13px}
+  .gate.hidden{display:none}
+  @media(max-width:520px){.stats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<!-- ============ PAROLA KAPISI ============ -->
+<div class="gate" id="gate">
+  <div class="box">
+    <div style="font-size:34px;margin-bottom:6px">🔒</div>
+    <h3>Panel Girişi</h3>
+    <p>Devam etmek için paneli açın.</p>
+    <input type="password" id="gatePass" placeholder="Parola" autocomplete="off" onkeydown="if(event.key==='Enter')tryGate()">
+    <button class="btn btn-primary" style="margin-top:12px" onclick="tryGate()">Giriş</button>
+    <div class="log err" id="gateErr" style="margin-top:10px">Parola hatalı.</div>
+  </div>
+</div>
+
+<div class="wrap" id="app" style="display:none">
+  <div class="head">
+    <h1>🖼️ SEO Görsel Yükleme Paneli</h1>
+    <p>Online Diyetisyen · görseli otomatik WebP'e çevirir, sıkıştırır ve siteye ekler</p>
+  </div>
+
+  <!-- ============ 1) GITHUB TOKEN ============ -->
+  <div class="card">
+    <h2>1 · GitHub Bağlantısı <span id="tokBadge" class="badge off">bağlı değil</span></h2>
+    <p class="hint">
+      Yükleme yapabilmek için bir GitHub <b>fine-grained token</b> gerekir (yalnızca bu repoya yazma yetkisi).
+      <a class="link" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Token oluştur →</a>
+    </p>
+    <label>GitHub Token (github_pat_… veya ghp_…)</label>
+    <input type="password" id="token" placeholder="github_pat_..." autocomplete="off">
+    <div class="row" style="margin-top:12px">
+      <div style="flex:2"><button class="btn btn-primary" style="width:100%" onclick="saveToken()">Kaydet & Test Et</button></div>
+      <div><button class="btn btn-ghost" style="width:100%" onclick="forgetToken()">Token'ı Unut</button></div>
+    </div>
+    <div class="log" id="tokLog"></div>
+  </div>
+
+  <!-- ============ 2) GÖRSEL SEÇ ============ -->
+  <div class="card">
+    <h2>2 · Görsel Seç</h2>
+    <p class="hint">JPG / PNG / WEBP sürükleyip bırak ya da tıklayıp seç. Görsel tarayıcıda işlenir; hiçbir yere gönderilmez.</p>
+    <div class="drop" id="drop">
+      <b>📤 Görseli buraya sürükle</b>
+      <small>veya tıklayarak seç</small>
+      <input type="file" id="file" accept="image/*" hidden>
+    </div>
+
+    <div class="preview" id="preview">
+      <img id="previewImg" alt="önizleme">
+      <div class="stats">
+        <div class="stat"><div class="k">Orijinal</div><div class="v" id="stOrig">–</div></div>
+        <div class="stat"><div class="k">Yeni (WebP)</div><div class="v good" id="stNew">–</div></div>
+        <div class="stat"><div class="k">Küçülme</div><div class="v good" id="stCut">–</div></div>
+      </div>
+
+      <label>Maksimum genişlik (px)</label>
+      <select id="maxw" onchange="reprocess()">
+        <option value="2000">2000 px (büyük / hero)</option>
+        <option value="1600" selected>1600 px (önerilen)</option>
+        <option value="1200">1200 px (içerik görseli)</option>
+        <option value="800">800 px (küçük / avatar)</option>
+      </select>
+
+      <label>Kalite <small style="font-weight:400;color:var(--muted)">(düşük = daha küçük dosya)</small></label>
+      <div class="range">
+        <input type="range" id="quality" min="50" max="95" value="82" oninput="qVal.textContent=this.value+'%';reprocessDebounced()">
+        <span class="val" id="qVal">82%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 3) SEO BİLGİLERİ ============ -->
+  <div class="card" id="metaCard" style="display:none">
+    <h2>3 · SEO Bilgileri</h2>
+    <p class="hint">Alt metni açıklayıcı yaz — dosya adı bundan otomatik üretilir (Türkçe karakter temizlenir).</p>
+    <label>Alt metni (görselin açıklaması)</label>
+    <textarea id="alt" placeholder="Örn: Online diyetisyen Tuğba Şeker Ağaç kişiye özel beslenme programı hazırlarken" oninput="autoName()"></textarea>
+    <label>Dosya adı <small style="font-weight:400;color:var(--muted)">(images/ klasörüne — .webp otomatik)</small></label>
+    <div class="row">
+      <div style="flex:3"><input type="text" id="fname" placeholder="online-diyetisyen-beslenme-programi"></div>
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-top:6px">Hedef: <code id="pathPreview">images/…webp</code></div>
+    <button class="btn btn-primary" style="margin-top:16px" id="uploadBtn" onclick="upload()" disabled>⬆️ Siteye Yükle</button>
+    <div class="log" id="upLog"></div>
+  </div>
+
+  <!-- ============ 4) SONUÇ ============ -->
+  <div class="card out" id="outCard">
+    <h2>4 · Hazır ✅ <span class="badge">yayında ~1 dk</span></h2>
+    <p class="hint">Aşağıdaki kodu ilgili sayfaya yapıştır. Görsel GitHub Pages tarafından ~1 dakikada yayınlanır.</p>
+    <div class="code" id="snippet"></div>
+    <button class="btn btn-ghost btn-sm" style="margin-top:10px" onclick="copySnippet()">📋 Kodu Kopyala</button>
+    <button class="btn btn-ghost btn-sm" style="margin-top:10px" onclick="resetAll()">🔄 Yeni Görsel</button>
+    <div style="font-size:12px;color:var(--muted);margin-top:10px">
+      Canlı adres: <a class="link" id="liveUrl" href="#" target="_blank" rel="noopener">–</a>
+    </div>
+  </div>
+
+  <div class="foot">
+    Repo: <b>Hakikatperest/onlinediyetisyen</b> · dal: main · klasör: /images/<br>
+    Token yalnızca bu tarayıcıda (localStorage) saklanır, hiçbir sunucuya gönderilmez.
+  </div>
+</div>
+
+<script>
+/* ==================== AYARLAR ==================== */
+const PASSPHRASE = "diyet2026";              // ← panel parolası (buradan değiştir)
+const OWNER  = "Hakikatperest";
+const REPO   = "onlinediyetisyen";
+const BRANCH = "main";
+const DIR    = "images";
+const SITE   = "https://onlinediyetisyen.online";
+/* ================================================ */
+
+/* ---- Parola kapısı ---- */
+function tryGate(){
+  const v = document.getElementById('gatePass').value;
+  if(v === PASSPHRASE){
+    sessionStorage.setItem('odp_ok','1');
+    openApp();
+  } else {
+    document.getElementById('gateErr').classList.add('on');
+  }
+}
+function openApp(){
+  document.getElementById('gate').classList.add('hidden');
+  document.getElementById('app').style.display='block';
+  initToken();
+}
+if(sessionStorage.getItem('odp_ok')==='1'){ openApp(); }
+
+/* ---- Token yönetimi ---- */
+function token(){ return localStorage.getItem('odp_token') || ''; }
+function initToken(){
+  const t = token();
+  if(t){ document.getElementById('token').value = t; markToken(true); }
+}
+function markToken(ok){
+  const b=document.getElementById('tokBadge');
+  b.textContent = ok?'bağlı':'bağlı değil';
+  b.className = 'badge'+(ok?'':' off');
+}
+async function saveToken(){
+  const t = document.getElementById('token').value.trim();
+  const log = document.getElementById('tokLog');
+  if(!t){ showLog(log,'err','Token boş.'); return; }
+  showLog(log,'info','Test ediliyor…');
+  try{
+    const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}`,{headers:ghHeaders(t)});
+    if(r.ok){
+      localStorage.setItem('odp_token',t);
+      markToken(true);
+      showLog(log,'ok','✅ Bağlantı başarılı — token kaydedildi.');
+    } else {
+      const j=await r.json().catch(()=>({}));
+      markToken(false);
+      showLog(log,'err','❌ Geçersiz token ya da yetki yok. ('+(j.message||r.status)+')');
+    }
+  }catch(e){ showLog(log,'err','❌ Ağ hatası: '+e.message); }
+}
+function forgetToken(){
+  localStorage.removeItem('odp_token');
+  document.getElementById('token').value='';
+  markToken(false);
+  showLog(document.getElementById('tokLog'),'info','Token silindi.');
+}
+function ghHeaders(t){
+  return {
+    'Authorization':'Bearer '+(t||token()),
+    'Accept':'application/vnd.github+json',
+    'X-GitHub-Api-Version':'2022-11-28',
+    'Content-Type':'application/json'
+  };
+}
+
+/* ---- Görsel seçme & işleme ---- */
+let srcFile=null, outBlob=null, outW=0, outH=0;
+const drop=document.getElementById('drop'), fileInput=document.getElementById('file');
+drop.addEventListener('click',()=>fileInput.click());
+fileInput.addEventListener('change',e=>{ if(e.target.files[0]) handleFile(e.target.files[0]); });
+['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over');}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over');}));
+drop.addEventListener('drop',e=>{ const f=e.dataTransfer.files[0]; if(f) handleFile(f); });
+
+function handleFile(f){
+  if(!f.type.startsWith('image/')){ alert('Lütfen bir görsel dosyası seçin.'); return; }
+  srcFile=f;
+  document.getElementById('stOrig').textContent = fmtKB(f.size);
+  document.getElementById('preview').classList.add('on');
+  document.getElementById('metaCard').style.display='block';
+  reprocess();
+}
+
+function loadImage(file){
+  return new Promise((res,rej)=>{
+    const img=new Image();
+    img.onload=()=>res(img);
+    img.onerror=()=>rej(new Error('Görsel okunamadı'));
+    img.src=URL.createObjectURL(file);
+  });
+}
+let _t;
+function reprocessDebounced(){ clearTimeout(_t); _t=setTimeout(reprocess,220); }
+async function reprocess(){
+  if(!srcFile) return;
+  const maxW = parseInt(document.getElementById('maxw').value,10);
+  const q = parseInt(document.getElementById('quality').value,10)/100;
+  const img = await loadImage(srcFile);
+  let w=img.naturalWidth, h=img.naturalHeight;
+  if(w>maxW){ h=Math.round(h*maxW/w); w=maxW; }
+  const c=document.createElement('canvas'); c.width=w; c.height=h;
+  c.getContext('2d').drawImage(img,0,0,w,h);
+  URL.revokeObjectURL(img.src);
+  outBlob = await new Promise(r=>c.toBlob(r,'image/webp',q));
+  outW=w; outH=h;
+  document.getElementById('previewImg').src=URL.createObjectURL(outBlob);
+  document.getElementById('stNew').textContent = fmtKB(outBlob.size);
+  const cut = Math.max(0,Math.round((1-outBlob.size/srcFile.size)*100));
+  document.getElementById('stCut').textContent = '%'+cut+' ↓';
+  refreshUploadState();
+}
+
+/* ---- SEO ad ---- */
+function slugify(s){
+  const map={'ç':'c','Ç':'c','ğ':'g','Ğ':'g','ı':'i','İ':'i','ö':'o','Ö':'o','ş':'s','Ş':'s','ü':'u','Ü':'u'};
+  return (s||'').replace(/[çÇğĞıİöÖşŞüÜ]/g,m=>map[m]).toLowerCase()
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').replace(/-{2,}/g,'-').slice(0,70);
+}
+let nameEdited=false;
+document.getElementById('fname').addEventListener('input',()=>{nameEdited=true;refreshUploadState();});
+function autoName(){
+  if(!nameEdited){
+    document.getElementById('fname').value = slugify(document.getElementById('alt').value);
+  }
+  refreshUploadState();
+}
+function currentName(){
+  let n = slugify(document.getElementById('fname').value);
+  return n;
+}
+function refreshUploadState(){
+  const n=currentName();
+  document.getElementById('pathPreview').textContent = n ? `${DIR}/${n}.webp` : `${DIR}/…webp`;
+  const alt=document.getElementById('alt').value.trim();
+  const ready = !!(token() && outBlob && n && alt);
+  document.getElementById('uploadBtn').disabled = !ready;
+}
+document.getElementById('alt').addEventListener('input',refreshUploadState);
+
+/* ---- Yükleme ---- */
+function blobToBase64(blob){
+  return new Promise((res,rej)=>{
+    const fr=new FileReader();
+    fr.onload=()=>res(fr.result.split(',')[1]);
+    fr.onerror=()=>rej(new Error('kodlama hatası'));
+    fr.readAsDataURL(blob);
+  });
+}
+async function getSha(path){
+  const r=await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}?ref=${BRANCH}`,{headers:ghHeaders()});
+  if(r.status===200){ const j=await r.json(); return j.sha; }
+  return null;
+}
+async function upload(){
+  const log=document.getElementById('upLog');
+  const btn=document.getElementById('uploadBtn');
+  const name=currentName();
+  const alt=document.getElementById('alt').value.trim().replace(/"/g,'&quot;');
+  const path=`${DIR}/${name}.webp`;
+  btn.disabled=true;
+  try{
+    showLog(log,'info','Kontrol ediliyor…');
+    const sha=await getSha(path);
+    if(sha && !confirm(`"${path}" zaten var. Üzerine yazılsın mı?`)){ btn.disabled=false; showLog(log,'info','İptal edildi.'); return; }
+    showLog(log,'info','Yükleniyor… (GitHub\'a commit)');
+    const b64=await blobToBase64(outBlob);
+    const body={ message:`Görsel yüklendi: ${name}.webp (panel)`, content:b64, branch:BRANCH };
+    if(sha) body.sha=sha;
+    const r=await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`,{
+      method:'PUT', headers:ghHeaders(), body:JSON.stringify(body)
+    });
+    const j=await r.json();
+    if(!r.ok) throw new Error(j.message||('HTTP '+r.status));
+    showLog(log,'ok','✅ Yüklendi! GitHub Pages ~1 dakikada yayınlar.');
+    showResult(name,alt);
+  }catch(e){
+    showLog(log,'err','❌ Hata: '+e.message);
+  }finally{ btn.disabled=false; }
+}
+
+function showResult(name,alt){
+  const url=`${SITE}/${DIR}/${name}.webp`;
+  const snip=`<img src="${url}" alt="${alt}" width="${outW}" height="${outH}" loading="lazy">`;
+  document.getElementById('snippet').textContent=snip;
+  const a=document.getElementById('liveUrl'); a.href=url; a.textContent=url;
+  document.getElementById('outCard').classList.add('on');
+  document.getElementById('outCard').scrollIntoView({behavior:'smooth'});
+}
+function copySnippet(){
+  navigator.clipboard.writeText(document.getElementById('snippet').textContent)
+    .then(()=>{ const b=event.target; const o=b.textContent; b.textContent='✓ Kopyalandı'; setTimeout(()=>b.textContent=o,1500); });
+}
+function resetAll(){
+  srcFile=outBlob=null; nameEdited=false;
+  fileInput.value='';
+  document.getElementById('alt').value='';
+  document.getElementById('fname').value='';
+  document.getElementById('preview').classList.remove('on');
+  document.getElementById('metaCard').style.display='none';
+  document.getElementById('outCard').classList.remove('on');
+  document.getElementById('upLog').classList.remove('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---- yardımcılar ---- */
+function fmtKB(b){ return b<1024*1024 ? Math.round(b/1024)+' KB' : (b/1024/1024).toFixed(2)+' MB'; }
+function showLog(el,type,msg){ el.className='log on '+type; el.textContent=msg; }
+</script>
+</body>
+</html>
