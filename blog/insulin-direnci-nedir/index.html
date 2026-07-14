@@ -218,7 +218,7 @@
     .foot-grid{grid-template-columns:1fr;gap:26px}
     .wa-float,.call-float{width:54px;height:54px}.call-float{bottom:84px}
   }
-  .reveal{opacity:0;transition:opacity .6s ease,transform .7s cubic-bezier(.16,.8,.3,1)}
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .7s cubic-bezier(.16,.8,.3,1)}
   .reveal.is-visible{opacity:1;transform:none}
   @media (prefers-reduced-motion: reduce){.reveal{opacity:1!important;transform:none!important}}
 </style>
@@ -547,7 +547,7 @@
   window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>10);});
   (function(){
     var els=Array.prototype.slice.call(document.querySelectorAll('.article-body h2, .quote, .callout, .plan, .disclaimer, .author-box, .art-cta, .faq details'));
-    els.forEach(function(el){el.classList.add('reveal');el.style.transform='translateY(18px)';});
+    els.forEach(function(el){el.classList.add('reveal');});
     if('IntersectionObserver' in window){
       var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target);}});},{threshold:0,rootMargin:'0px 0px -6% 0px'});
       els.forEach(function(el){io.observe(el);});
