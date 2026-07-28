@@ -546,7 +546,7 @@
   window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>10);});
   // Scroll reveal (kartlar kaydırınca belirsin)
   (function(){
-    var cards = Array.prototype.slice.call(document.querySelectorAll('.post-card, .blog-note'));
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.post-card'));
     cards.forEach(function(el,i){ el.classList.add('reveal', (i % 2) ? 'from-right' : 'from-left'); });
     if('IntersectionObserver' in window){
       var io = new IntersectionObserver(function(entries){
