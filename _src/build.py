@@ -76,6 +76,20 @@ def ilce_yol(il, ilce):
 HUB_URL = f"{SITE}/online-diyetisyen/"
 
 
+def _tuzlu(tohum, tuz):
+    """Havuz seçimlerini birbirinden bağımsızlaştırır.
+
+    Tek bir `tohum` bütün havuzlarda kullanılırsa, iki il bir havuzda çakıştığında
+    diğer havuzların hepsinde de çakışıyor ve sayfa başına birkaç ortak cümle çıkıyor.
+    """
+    h = tohum & 0xFFFFFFFF
+    for ch in tuz:
+        h = (h * 131 + ord(ch)) & 0xFFFFFFFF
+    h ^= (h >> 15)
+    h = (h * 2246822519) & 0xFFFFFFFF
+    return (h ^ (h >> 13)) & 0xFFFFFFFF
+
+
 # --------------------------------------------------------------- iç linkleme
 ANCHOR_HAVUZU = [
     "online diyetisyen", "online diyetisyen hizmeti", "online beslenme danışmanlığı",
@@ -96,8 +110,16 @@ def ana_domain_cumlesi(p, tohum):
         f'Hizmetin kapsamına dair ayrıntılar <a href="{SITE}/">{a}</a> sayfasında anlatılıyor.',
         f'Takip modelini ve içeriğini merak edenler <a href="{SITE}/">{a}</a> sayfasını inceleyebilir.',
         f'Sürecin bütününe <a href="{SITE}/">{a}</a> sayfasından bakabilirsiniz.',
+        f'Hangi hizmetlerin verildiğini <a href="{SITE}/">{a}</a> sayfasından görebilirsiniz.',
+        f'Danışan yorumları ve çalışma şekli için <a href="{SITE}/">{a}</a> sayfasına bakılabilir.',
+        f'Programın kapsamını ve görüşme akışını <a href="{SITE}/">{a}</a> sayfasında anlattık.',
+        f'Uygulamanın ayrıntıları <a href="{SITE}/">{a}</a> sayfasında yer alıyor.',
+        f'Çalışma yöntemini görmek isteyenler <a href="{SITE}/">{a}</a> sayfasını inceleyebilir.',
+        f'Hizmetin bütününü <a href="{SITE}/">{a}</a> sayfasından takip edebilirsiniz.',
+        f'Görüşme öncesi bilinmesi gerekenler <a href="{SITE}/">{a}</a> sayfasında toplandı.',
+        f'Sürecin nasıl işlediğine dair ayrıntılar <a href="{SITE}/">{a}</a> sayfasında.',
     ]
-    return kaliplar[tohum % len(kaliplar)]
+    return kaliplar[_bidx(p['il'], 'anadomain') % len(kaliplar)]
 
 
 def ilce_listesi_html(il, ilceler, tohum):
@@ -114,7 +136,13 @@ def ilce_listesi_html(il, ilceler, tohum):
         f"Görüşmeler uzaktan yapıldığı için {T.tamlayan(ad)} tüm ilçelerinden katılım mümkün:",
         f"{ad} genelinde, ilçe ayrımı olmaksızın tüm bölgelerden görüşme yapılabiliyor:",
         f"Aşağıdaki ilçelerin tamamı dâhil olmak üzere {T.tamlayan(ad)} her yerinden katılınabiliyor:",
-    ][tohum % 3]
+        f"{ad} sınırları içindeki tüm ilçelerden görüşme yapılabiliyor:",
+        f"Uzaktan yürütülen takipte {T.tamlayan(ad)} hangi ilçesinde olduğunuz fark etmiyor:",
+        f"{T.tamlayan(ad)} bütün ilçeleri hizmet kapsamında:",
+        f"Aşağıdaki ilçelerden katılan danışanlarla görüşmeler sürüyor:",
+        f"{ad} içindeki her ilçeden görüşme ayarlanabiliyor:",
+        f"Kapsam {T.tamlayan(ad)} tamamını içeriyor:",
+    ][_bidx(il, 'ilcelist')]
     return (f'<p>{giris}</p><div class="ilce-grid ilce-liste">{ic}</div>'
             f'<p>Görüşmenin içeriği ilçeye göre değişmiyor; plan kişinin kendi mutfağı ve '
             f'günlük düzeni üzerinden kuruluyor.</p>')
@@ -139,7 +167,12 @@ def yakin_il_html(il, tohum):
         "Coğrafi olarak yakın illerdeki sayfalar:",
         "Yakın illerin sayfalarına da bakabilirsiniz:",
         "Komşu illerdeki sayfalar:",
-    ][tohum % 3]
+        "Bölgedeki diğer illerin sayfaları:",
+        "Yakın çevredeki il sayfaları:",
+        "Aynı bölgeden diğer iller:",
+        "Çevre illerdeki sayfalara buradan ulaşabilirsiniz:",
+        "En yakın illerin sayfaları:",
+    ][_bidx(il, 'yakinil')]
     return (f'<h2>Yakındaki İllerden Online Diyetisyen Sayfaları</h2>'
             f'<p>{giris}</p><div class="komsu">{ic}</div>')
 
@@ -152,16 +185,32 @@ def cta_html(p, tohum):
         "Görüşme Planlamak İsterseniz",
         f"{il} İçin İlk Adım",
         "Size Uygun Takip Modelini Konuşalım",
+        f"{ilDE} Başlamak İçin Ne Gerekiyor?",
+        "Ön Görüşme Nasıl Ayarlanır?",
+        f"{il} İçin Görüşme Saati Belirleyelim",
+        "Nereden Başlayacağınızı Birlikte Belirleyelim",
+        f"{ilDE} İlk Görüşme İçin",
+        "Sorularınız İçin Ulaşabilirsiniz",
+        f"{il} İçin Uygun Programı Konuşalım",
+        "Başlamadan Önce Konuşalım",
     ]
     metinler = [
-        f"Uygun görüşme saatini ve size uygun takip modelini konuşmak için telefonla ulaşabilirsiniz.",
-        f"Hangi takip modelinin size uyduğunu kısa bir ön görüşmeyle birlikte belirleyebiliriz.",
-        f"Beslenme hedefinizi ve mevcut düzeninizi konuşarak başlıyoruz; ilk adım için yazmanız yeterli.",
-        f"Sorularınız için telefon veya WhatsApp üzerinden doğrudan iletişime geçebilirsiniz.",
+        "Uygun görüşme saatini ve size uygun takip modelini konuşmak için telefonla ulaşabilirsiniz.",
+        "Hangi takip modelinin size uyduğunu kısa bir ön görüşmeyle birlikte belirleyebiliriz.",
+        "Beslenme hedefinizi ve mevcut düzeninizi konuşarak başlıyoruz; ilk adım için yazmanız yeterli.",
+        "Sorularınız için telefon veya WhatsApp üzerinden doğrudan iletişime geçebilirsiniz.",
+        "Mevcut düzeninizi ve hedefinizi konuşacağımız kısa bir görüşmeyle başlıyoruz.",
+        "Program hakkındaki sorularınızı görüşme öncesinde de yanıtlayabiliriz.",
+        "Size uygun görüşme saatini birlikte belirleyip başlayabiliriz.",
+        "İlk adım kısa bir ön görüşme; gerisi buna göre planlanıyor.",
+        "Hedefinizi ve günlük düzeninizi konuştuktan sonra takip modelini birlikte seçiyoruz.",
+        "Nasıl ilerleyeceğimizi konuşmak için yazmanız veya aramanız yeterli.",
+        "Beslenme geçmişiniz ve hedefiniz üzerinden başlayacağımız kısa bir görüşme yeterli.",
+        "Uygun saati belirleyip ön görüşmeyle sürece başlayabiliriz.",
     ]
     return f'''<div class="lok-cta">
-<h2>{basliklar[tohum % len(basliklar)]}</h2>
-<p>{metinler[(tohum + 2) % len(metinler)]}</p>
+<h2>{basliklar[_bidx(p['il'], 'ctabaslik') % len(basliklar)]}</h2>
+<p>{metinler[_bidx(p['il'], 'ctametin') % len(metinler)]}</p>
 <a class="btn btn-lg pulse" href="{C.TEL_HREF}">📞 {C.TEL_GORUNEN}</a>
 <a class="btn btn-wa btn-lg" href="{C.WA}" target="_blank" rel="noopener">💬 WhatsApp'tan yaz</a>
 </div>'''
@@ -174,23 +223,36 @@ TITLE_KALIPLARI = [
     "Online Diyetisyen {il} | Video Görüşmeyle Beslenme Takibi",
     "{il} İçin Online Diyetisyen ve Beslenme Planı",
     "{il} Online Diyetisyen | Kişiye Özel Diyet Programı",
+    "{il} Online Diyetisyen | Diyet ve Beslenme Takibi",
+    "{il} Online Diyetisyen — Kişiye Özel Beslenme Planı",
+    "Online Diyetisyen {il} | Uzaktan Diyet Programı",
+    "{il} Online Diyetisyen | Evden Beslenme Danışmanlığı",
+    "{il} Online Diyetisyen — Video Görüşmeli Diyet Takibi",
 ]
 DESC_KALIPLARI = [
     "{ilDE} online diyetisyen desteği: video görüşme, kişiye özel öğün planı ve düzenli takip. "
     "{dyt} ile uzaktan beslenme danışmanlığı.",
-    "{ilDE} yaşayanlar için uzaktan beslenme danışmanlığı. Görüşme nasıl işler, kimler için uygun "
-    "ve ücret neye göre değişir — hepsi bu sayfada.",
-    "{il} için online diyetisyen rehberi: yerel sofra düzeni, görüşme adımları, online ile yüz yüze "
-    "farkı ve sık sorulan sorular.",
+    "{ilDE} yaşayanlar için uzaktan beslenme danışmanlığı. {il} sofrası plana nasıl uyarlanır, "
+    "görüşme nasıl işler — bu sayfada.",
+    "{il} için online diyetisyen rehberi: yerel sofra düzeni, mevsimsel beslenme ve takip "
+    "sürecinin nasıl kurulduğu.",
     "{ilDE} online diyet ve beslenme takibi. Ulaşım süresi olmadan, kendi mutfağınız üzerinden "
     "kurulan kişiye özel plan.",
+    "{il} yemeklerini plandan çıkarmadan kilo yönetimi. {dyt} ile uzaktan beslenme danışmanlığı "
+    "ve düzenli takip.",
+    "{ilDE} yaşayanlar için kişiye özel diyet programı: yerel sofra hesaba katılarak hazırlanan "
+    "plan ve video görüşmeyle takip.",
+    "{il} için hazırlanan online diyetisyen sayfası: yöresel yemeklerin plandaki yeri, mevsim "
+    "etkisi ve görüşme akışı.",
+    "{ilDE} uzaktan beslenme danışmanlığı. Yasak listesi değil, mevcut sofranıza göre kurulan "
+    "sürdürülebilir bir düzen.",
 ]
 
 
 def il_meta(p, tohum):
     il = T.baslik(p["il"])
-    t = TITLE_KALIPLARI[tohum % len(TITLE_KALIPLARI)].format(il=il)
-    d = DESC_KALIPLARI[(tohum + 1) % len(DESC_KALIPLARI)].format(
+    t = TITLE_KALIPLARI[_bidx(p['il'], 'title')].format(il=il)
+    d = DESC_KALIPLARI[_bidx(p['il'], 'desc')].format(
         il=il, ilDE=T.bulunma(il), dyt=C.DYT)
     return t, d
 
@@ -233,7 +295,7 @@ def il_sayfasi(il, zorla=False):
 
     # Yerel bloklar HER il sayfasında bulunur — varyant yalnızca sıralarını değiştirir.
     # Genel bilgi konu sayfalarına taşındığı için sayfanın gövdesini bunlar taşır.
-    ZORUNLU_YEREL = ["mutfak", "iklim", "mesafe"]
+    ZORUNLU_YEREL = ["mutfak", "pratik", "iklim", "mesafe"]
     sira = list(var["blok_sirasi"])
     for z in ZORUNLU_YEREL:
         if z not in sira:
@@ -264,6 +326,8 @@ def il_sayfasi(il, zorla=False):
         if not uretici:
             continue
         b, g, aeo = uretici(p)
+        if g is None:          # verisi olmayan blok (örn. pratik) hiç basılmaz
+            continue
         parcalar.append((f"<h2>{b}</h2>" if b else "") + g)
         if aeo:
             aeo_cevaplar.append(aeo)
@@ -307,6 +371,11 @@ import konular as KON       # noqa: E402
 import diyet as DY         # noqa: E402
 
 
+def _bidx(il, havuz):
+    """content.py'deki tek profilden okur — ayrı dağıtım yapılmaz."""
+    return C.PROFIL[il][C.HAVUZLAR.index(havuz)]
+
+
 # Lokasyon-BAĞIMSIZ bilgi il sayfasında tekrarlanmaz; konu sayfalarına gider.
 # Duplicate content'i şablon hilesiyle değil, doğru bilgi mimarisiyle çözüyoruz.
 IL_SAYFASINDAN_CIKAN = {"nedir", "surec", "ucret", "karsilastirma", "kimler"}
@@ -319,7 +388,13 @@ def rehber_linkleri_html(p, tohum):
         "Hizmetin lokasyondan bağımsız tarafını merak ediyorsanız:",
         "Süreç, ücret ve karşılaştırma başlıkları için ayrıntılı rehberler:",
         "Aşağıdaki rehberler bu sayfadaki yerel bilgiyi tamamlıyor:",
-    ][tohum % 4]
+        "Diyet türleri ve başlangıç adımları için ayrıntılı rehberler:",
+        "Bu sayfadaki yerel bilginin dışında kalan başlıklar:",
+        "Süreci baştan sona anlatan rehberler:",
+        "Diyete dair genel sorular şu sayfalarda cevaplanıyor:",
+        "Nereden başlanacağı ve neye dikkat edileceği ayrı sayfalarda:",
+        "Konu başlıklarına göre hazırlanmış rehberler:",
+    ][_bidx(p['il'], 'rehber')]
     ic = "".join(
         f'<a href="{SITE}/{k["slug"]}/">{k["h1"].rstrip("?")}</a>'
         for k in KON.KONULAR
@@ -525,11 +600,11 @@ def main():
         for k in KON.KONULAR:
             sayfalar.append(konu_sayfasi(k))
     if a.ornek:
-        hazir = []
         for il in ("ADANA", "MERSİN", "YALOVA", "İSTANBUL"):
             sayfalar.append(il_sayfasi(il))
-            hazir.append(il)
-        sayfalar.append(hub_sayfasi(hazir))
+    if a.ornek or a.hepsi:
+        # Hub, hangi illerin üretildiğine değil hangilerinin YAYINDA olduğuna bakar.
+        sayfalar.append(hub_sayfasi(yayindaki_iller()))
     if a.hepsi:
         for il in VERI:
             try:
