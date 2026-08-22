@@ -103,8 +103,13 @@ def anchor(tohum, kayma=0):
 
 
 def ana_domain_cumlesi(p, tohum):
-    """12. madde: her sayfada ana sayfaya doğal, konumu değişen tek link."""
-    a = anchor(tohum)
+    """Ana sayfaya birinci link — anchor DAİMA tam eşleşme: "online diyetisyen".
+
+    Cümle kalıbı ve sayfadaki konumu ile göre değişir, anchor sabit kalır.
+    İkinci link `ikinci_domain_cumlesi` ile farklı bir bölümde ve farklı
+    (varyasyonlu) anchor'la verilir; böylece exact-match yığılması olmaz.
+    """
+    a = "online diyetisyen"
     kaliplar = [
         f'Görüşme modelinin genel işleyişini <a href="{SITE}/">{a}</a> sayfasında bulabilirsiniz.',
         f'Hizmetin kapsamına dair ayrıntılar <a href="{SITE}/">{a}</a> sayfasında anlatılıyor.',
@@ -120,6 +125,30 @@ def ana_domain_cumlesi(p, tohum):
         f'Sürecin nasıl işlediğine dair ayrıntılar <a href="{SITE}/">{a}</a> sayfasında.',
     ]
     return kaliplar[_bidx(p['il'], 'anadomain') % len(kaliplar)]
+
+
+def ikinci_domain_cumlesi(p, tohum):
+    """Ana sayfaya ikinci link — varyasyonlu anchor, gövdenin başka bir yerinde.
+
+    Tam eşleşme ("online diyetisyen") bilerek dışlanır: o anchor birinci linke
+    ayrılmıştır, ikisi birden exact olursa anchor çeşitliliği kaybolur.
+    """
+    havuz = [x for x in ANCHOR_HAVUZU if x != "online diyetisyen"]
+    a = havuz[_bidx(p["il"], "anadomain") % len(havuz)]
+    ad = T.baslik(p["il"])
+    # Kalıpların hepsinde il adı geçer: aksi hâlde aynı kalıba düşen iki il
+    # birebir aynı cümleyi üretiyor ve ortak cümle sayısını yükseltiyordu.
+    kaliplar = [
+        f'{T.bulunma(ad)} yaşayanlar <a href="{SITE}/">{a}</a> sayfasından hizmet kapsamına bakabilir.',
+        f'{ad} için görüşme öncesinde <a href="{SITE}/">{a}</a> sayfasındaki bilgileri incelemek faydalı olur.',
+        f'{T.bulunma(ad)} programın içeriğini ve danışan yorumlarını <a href="{SITE}/">{a}</a> sayfasında bulabilirsiniz.',
+        f'{ad} için hizmetin ayrıntıları <a href="{SITE}/">{a}</a> sayfasında yer alıyor.',
+        f'{ad} dışından katılanlar da dâhil tüm süreç <a href="{SITE}/">{a}</a> sayfasında anlatılıyor.',
+        f'{T.bulunma(ad)} uygulanan takip modelini <a href="{SITE}/">{a}</a> sayfasında ayrıntılı anlattık.',
+        f'{ad} için ücretler ve çalışma şekli <a href="{SITE}/">{a}</a> sayfasında.',
+        f'{T.ayrilma(ad)} katılmak isteyenlerin merak ettikleri <a href="{SITE}/">{a}</a> sayfasında toplandı.',
+    ]
+    return kaliplar[_bidx(p["il"], "rehber") % len(kaliplar)]
 
 
 def ilce_listesi_html(il, ilceler, tohum):
@@ -236,7 +265,7 @@ DESC_KALIPLARI = [
     "görüşme nasıl işler — bu sayfada.",
     "{il} için online diyetisyen rehberi: yerel sofra düzeni, mevsimsel beslenme ve takip "
     "sürecinin nasıl kurulduğu.",
-    "{ilDE} online diyet ve beslenme takibi. Ulaşım süresi olmadan, kendi mutfağınız üzerinden "
+    "{ilDE} online diyet ve beslenme takibi. {il} için ulaşım süresi olmadan, kendi mutfağınız üzerinden "
     "kurulan kişiye özel plan.",
     "{il} yemeklerini plandan çıkarmadan kilo yönetimi. {dyt} ile uzaktan beslenme danışmanlığı "
     "ve düzenli takip.",
@@ -244,7 +273,7 @@ DESC_KALIPLARI = [
     "plan ve video görüşmeyle takip.",
     "{il} için hazırlanan online diyetisyen sayfası: yöresel yemeklerin plandaki yeri, mevsim "
     "etkisi ve görüşme akışı.",
-    "{ilDE} uzaktan beslenme danışmanlığı. Yasak listesi değil, mevcut sofranıza göre kurulan "
+    "{ilDE} uzaktan beslenme danışmanlığı. Yasak listesi değil, {il} sofrasına göre kurulan "
     "sürdürülebilir bir düzen.",
 ]
 
@@ -295,7 +324,7 @@ def il_sayfasi(il, zorla=False):
 
     # Yerel bloklar HER il sayfasında bulunur — varyant yalnızca sıralarını değiştirir.
     # Genel bilgi konu sayfalarına taşındığı için sayfanın gövdesini bunlar taşır.
-    ZORUNLU_YEREL = ["mutfak", "pratik", "iklim", "mesafe"]
+    ZORUNLU_YEREL = ["mutfak", "pratik", "iklim", "mesafe", "ulasim"]
     sira = list(var["blok_sirasi"])
     for z in ZORUNLU_YEREL:
         if z not in sira:
@@ -338,6 +367,8 @@ def il_sayfasi(il, zorla=False):
 
     parcalar.append(rehber_linkleri_html(p, tohum))
     parcalar.append(f"<p>{ana_domain_cumlesi(p, tohum)}</p>")
+    parcalar.insert(min(2, len(parcalar)),
+                    f"<p>{ikinci_domain_cumlesi(p, tohum)}</p>")
     parcalar.append(yakin_il_html(il, tohum))
     parcalar.append(cta_html(p, tohum))
     parcalar.append(f'<p class="guncelleme">Son güncelleme: {BUGUN} · '
@@ -347,6 +378,7 @@ def il_sayfasi(il, zorla=False):
 <span class="rozet">📍 {ad} · Online görüşme</span>
 <h1>{h1}</h1>
 <p class="sub">{aciklama}</p>
+{R.HERO_CTA}
 </div></section>
 <article class="article"><div class="wrap">
 {R.gorsel_html(hero_gorsel, f"{adDE} online diyetisyen desteği — {gorseller[0][1]}", lazy=False)}
@@ -524,6 +556,7 @@ def ilce_sayfasi(il, ilce):
 <span class="rozet">📍 {i} · {l} · Online görüşme</span>
 <h1>{h1}</h1>
 <p class="sub">{aciklama}</p>
+{R.HERO_CTA}
 </div></section>
 <article class="article"><div class="wrap">
 {R.gorsel_html(hero[0], f"{T.bulunma(i)} online diyetisyen desteği — {hero[1]}", lazy=False)}
@@ -670,6 +703,7 @@ def konu_sayfasi(k):
     govde = f'''<section class="lok-hero"><div class="wrap">
 <h1>{k["h1"]}</h1>
 <p class="sub">{k["desc"]}</p>
+{R.HERO_CTA}
 </div></section>
 <article class="article"><div class="wrap">
 {R.gorsel_html(gorseller[0][0], f"{k['h1'].rstrip('?')} — {gorseller[0][1]}", lazy=False)}
@@ -714,6 +748,7 @@ def hub_sayfasi(hazir_iller):
     govde = f'''<section class="lok-hero"><div class="wrap">
 <h1>İllere Göre Online Diyetisyen</h1>
 <p class="sub">{desc}</p>
+{R.HERO_CTA}
 </div></section>
 <article class="article"><div class="wrap">
 {R.gorsel_html(g[0], f"Türkiye genelinde online diyetisyen — {g[1]}", lazy=False)}

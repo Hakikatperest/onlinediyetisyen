@@ -221,3 +221,46 @@ details.faq>div{padding:0 16px 15px;color:var(--muted)}
 .guncelleme{font-size:.87rem;color:var(--muted);margin-top:30px;padding-top:16px;border-top:1px solid var(--line)}
 .ilce-grid.ilce-liste span{display:block;padding:10px 13px;border:1px solid var(--line);
   border-radius:10px;background:var(--green-50);color:var(--green-900);font-size:.93rem;font-weight:600}
+
+/* ===== Tıklanabilir görsel (arama tetikler) ===== */
+.gorsel-ara{position:relative;display:block;border-radius:var(--radius);overflow:hidden}
+.gorsel-ara img{display:block;transition:transform .4s cubic-bezier(.16,.8,.3,1)}
+.gorsel-ara:hover img,.gorsel-ara:focus-visible img{transform:scale(1.03)}
+.gorsel-ara .ara-rozet{position:absolute;right:14px;bottom:14px;display:inline-flex;align-items:center;
+  gap:6px;background:rgba(37,99,235,.94);color:#fff;font-size:.88rem;font-weight:700;
+  padding:9px 15px;border-radius:999px;box-shadow:0 8px 22px -8px rgba(37,99,235,.8);
+  transition:background .25s,transform .25s}
+.gorsel-ara:hover .ara-rozet,.gorsel-ara:focus-visible .ara-rozet{background:#1d4ed8;transform:translateY(-2px)}
+.gorsel-ara:focus-visible{outline:3px solid var(--green-500);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){
+  .gorsel-ara img,.gorsel-ara .ara-rozet{transition:none}
+  .gorsel-ara:hover img,.gorsel-ara:focus-visible img{transform:none}
+}
+
+/* ===== Hero eylem butonları (ana sayfadakiyle aynı görünüm) ===== */
+.lok-hero .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.lok-hero .btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.55)}
+.lok-hero .btn-ghost:hover{background:rgba(255,255,255,.14);border-color:#fff}
+@media(max-width:520px){
+  .lok-hero .hero-cta{flex-direction:column;align-items:stretch}
+  .lok-hero .hero-cta .btn{justify-content:center;text-align:center}
+}
+
+/* ===== Ulaşım / randevu kartı ===== */
+.ulas-kart{background:linear-gradient(135deg,var(--green-800),var(--green-600));color:#fff;
+  border-radius:var(--radius);padding:26px 24px;margin:20px 0;text-align:center;
+  box-shadow:var(--shadow)}
+.ulas-etiket{display:inline-block;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);
+  padding:5px 13px;border-radius:999px;margin-bottom:14px}
+a.ulas-tel{display:block;font-size:clamp(1.6rem,5.5vw,2.35rem);font-weight:800;letter-spacing:.02em;
+  color:#fff;text-decoration:none;margin:4px 0 10px;font-variant-numeric:tabular-nums}
+a.ulas-tel:hover,a.ulas-tel:focus-visible{text-decoration:underline;text-underline-offset:4px}
+.ulas-alt{color:#d8efe2;font-size:.96rem;margin:0 auto 18px;max-width:52ch}
+.ulas-btnler{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.ulas-kart .btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.55)}
+.ulas-kart .btn-ghost:hover{background:rgba(255,255,255,.14);border-color:#fff}
+@media(max-width:520px){
+  .ulas-btnler{flex-direction:column;align-items:stretch}
+  .ulas-btnler .btn{justify-content:center;text-align:center}
+}

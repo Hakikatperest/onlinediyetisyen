@@ -23,10 +23,10 @@ from dagitim import profil_dagit, kume_dagit
 # üç ortak cümle çıkabiliyordu (altı il çifti bu yüzden denetimden geçmemişti).
 HAVUZLAR = ["mutfak_giris", "mutfak_kapanis", "mesafe_baslik", "mesafe_acilis",
             "mesafe_devam", "mesafe_cozum", "iklim_baslik", "iklim_kapanis",
-            "pratik_baslik",
+            "pratik_baslik", "ulasim_baslik", "ulasim_metin",
             "title", "desc", "anadomain", "rehber", "ilcelist", "yakinil",
             "ctabaslik", "ctametin"]
-HAVUZ_BOYUT = [12, 12, 12, 12, 12, 12, 12, 12, 6,
+HAVUZ_BOYUT = [12, 12, 12, 12, 12, 12, 12, 12, 6, 8, 8,
                10, 8, 12, 10, 9, 8, 12, 12]
 
 _VERI_YOLU = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "turkiye.json")
@@ -119,29 +119,29 @@ def blok_mutfak(p):
     liste = "".join(f"<li>{m}</li>" for m in p["mutfak"])
     t = _tohum(p)
     giris = [
-        f"Planı kurarken yemekleri listeden silmek yerine ölçüsünü ve sıklığını düzenliyoruz. "
+        f"{il} planını kurarken yemekleri listeden silmek yerine ölçüsünü ve sıklığını düzenliyoruz. "
         f"{ilDE} sık karşılaştığımız sofra unsurları:",
-        f"Çalışma yöntemimiz, alışık olunan sofrayı bozmadan dengeyi kurmak üzerine. "
+        f"{il} için çalışma yöntemimiz, alışık olunan sofrayı bozmadan dengeyi kurmak üzerine. "
         f"{ilDE} öne çıkan başlıklar:",
-        f"Bir planın uygulanabilir olması için kişinin zaten yediği yemeklerle kurulması gerekiyor. "
+        f"{il} için bir planın uygulanabilir olması, kişinin zaten yediği yemeklerle kurulmasına bağlı. "
         f"{ilDE} bu sofranın öğeleri:",
-        f"Yerel sofrayı diyetin dışına atmak yerine planın içine almayı tercih ediyoruz. "
+        f"{il} sofrasını diyetin dışına atmak yerine planın içine almayı tercih ediyoruz. "
         f"{ilDE} sık karşımıza çıkanlar:",
-        f"Beslenme planının ilk kuralı, kişinin gerçekten yediği yemekler üzerine kurulmuş olması. "
+        f"{il} için beslenme planının ilk kuralı, kişinin gerçekten yediği yemekler üzerine kurulması. "
         f"{ilDE} bu listeyi şunlar oluşturuyor:",
-        f"Sofrayı değiştirmek yerine sofradaki dengeyi değiştiriyoruz. "
+        f"{il} sofrasını değiştirmek yerine sofradaki dengeyi değiştiriyoruz. "
         f"{ilDE} plana giren başlıca yemekler:",
-        f"Alışkanlıkları kökten değiştiren planlar birkaç hafta içinde bırakılıyor; biz mevcut "
-        f"düzeni esas alıyoruz. {ilDE} düzenli sofrada yer alanlar:",
-        f"Danışan görüşmelerinde ilk konuştuğumuz şey mutfakta gerçekten ne olduğu. "
+        f"Alışkanlıkları kökten değiştiren planlar birkaç hafta içinde bırakılıyor; {il} için "
+        f"mevcut düzeni esas alıyoruz. {ilDE} düzenli sofrada yer alanlar:",
+        f"{il} danışan görüşmelerinde ilk konuştuğumuz şey mutfakta gerçekten ne olduğu. "
         f"{ilDE} verilen cevaplarda öne çıkanlar:",
-        f"Uygulanabilir bir plan, market alışkanlığını ve mutfaktaki gerçeği tanımak zorunda. "
+        f"{il} için uygulanabilir bir plan, market alışkanlığını ve mutfaktaki gerçeği tanımak zorunda. "
         f"{ilDE} karşımıza çıkan tablo:",
-        f"Planın içine alınacak yemekleri belirlemek, çıkarılacakları belirlemekten daha önemli. "
+        f"{il} planında içeri alınacak yemekleri belirlemek, çıkarılacakları belirlemekten daha önemli. "
         f"{ilDE} bu listede yer alanlar:",
-        f"Bir sofrayı diyete uyarlamak, onu tanımakla başlıyor. "
+        f"{il} sofrasını diyete uyarlamak, onu tanımakla başlıyor. "
         f"{ilDE} düzenli olarak karşılaştığımız yemekler:",
-        f"Kişinin damak tadını yok sayan plan uzun ömürlü olmuyor. "
+        f"{il} için kişinin damak tadını yok sayan plan uzun ömürlü olmuyor. "
         f"{ilDE} hesaba kattığımız yemekler:",
     ][_idx(p, 'mutfak_giris')]
     kapanis = [
@@ -670,3 +670,94 @@ def blok_pratik(p):
 
 
 BLOKLAR["pratik"] = blok_pratik
+
+
+def blok_ulasim(p):
+    """“{İl} online diyetisyene nasıl ulaşırsınız?” bölümü.
+
+    Her il sayfasında bulunur; numara, randevu akışı ve ücretsiz ön görüşme
+    burada net biçimde verilir. Kalıpların tamamında il adı geçer — aksi hâlde
+    aynı kalıba düşen iller birebir aynı cümleyi üretirdi.
+    """
+    il = T.baslik(p["il"])
+    ilDE, ilDEN = T.bulunma(il), T.ayrilma(il)
+    ilE, ilIN = T.yonelme(il), T.tamlayan(il)
+    b = _idx(p, "ulasim_baslik")
+    m = _idx(p, "ulasim_metin")
+
+    baslik = [
+        f"{il} Online Diyetisyene Nasıl Ulaşırsınız?",
+        f"{il} Online Diyetisyen Randevusu Nasıl Alınır?",
+        f"{ilDE} Online Diyetisyene Ulaşmanın Yolu",
+        f"{il} İçin Online Diyetisyen Randevusu",
+        f"{il} Online Diyetisyene Bugün Nasıl Başvurulur?",
+        f"{ilDEN} Online Diyetisyene Ulaşmak İçin",
+        f"{il} Online Diyetisyen İletişim ve Randevu",
+        f"{il} İçin İlk Görüşme Nasıl Ayarlanır?",
+    ][b % 8]
+
+    giris = [
+        f"{ilDE} online diyetisyene ulaşmanın yolu tek bir telefon görüşmesinden geçiyor. "
+        f"Numaradan ulaşıp uygun saatinizi belirttiğinizde {il} için randevunuz oluşturuluyor.",
+        f"{il} için randevu almak karmaşık bir süreç değil: numarayı arayıp uygun gününüzü "
+        f"söylemeniz yeterli, görüşme saatini birlikte belirliyoruz.",
+        f"{ilDEN} online diyetisyene ulaşmak isteyenler doğrudan telefonla veya WhatsApp "
+        f"üzerinden yazarak başlayabiliyor; {il} için ayrıca bir form doldurmanız gerekmiyor.",
+        f"{ilDE} yaşıyorsanız randevu için şehir dışına çıkmanıza gerek yok. Numaradan "
+        f"ulaştığınızda {il} için uygun görüşme saatiniz belirleniyor.",
+        f"{il} için ilk adım basit: numarayı arıyor ya da WhatsApp'tan yazıyorsunuz, "
+        f"size uygun saat belirleniyor ve görüşme günü konuşuyoruz.",
+        f"{ilDEN} randevu almak için tek yapmanız gereken aşağıdaki numaraya ulaşmak. "
+        f"{il} için görüşme saatiniz size uygun aralıkta ayarlanıyor.",
+        f"{ilDE} online diyetisyen randevusu telefonla veya WhatsApp mesajıyla alınıyor. "
+        f"{il} için görüşme günü ve saati birlikte belirleniyor.",
+        f"{il} için başvuru süreci tek adımdan oluşuyor: numaradan ulaşmak. "
+        f"Sonrasında {il} için uygun görüşme saatinizi birlikte planlıyoruz.",
+    ][m % 8]
+
+    kapanis = [
+        f"{ilDE} online diyetisyene ulaşarak size özel beslenme programınıza başlayabilir, "
+        f"ücretsiz ön görüşmeyle diyet programınızın ilk adımını atabilirsiniz.",
+        f"{ilDEN} ulaşıp ücretsiz ön görüşme talep ederek, size uygun beslenme düzeninin "
+        f"nasıl kurulacağını hiçbir taahhüt vermeden konuşabilirsiniz.",
+        f"{il} için hazırlanacak beslenme programının ilk adımı bu görüşme. "
+        f"Ücretsiz ön görüşmede hedefinizi ve mevcut düzeninizi konuşuyoruz.",
+        f"{ilDE} sağlıklı beslenme düzenine geçmek isteyenler, ücretsiz ön görüşmeyle "
+        f"sürecin kendilerine uygun olup olmadığını baştan görebiliyor.",
+        f"{ilDEN} katılacağınız ücretsiz ön görüşme, size özel diyet programınızın "
+        f"başlangıç noktası oluyor.",
+        f"{il} için beslenme programınıza kavuşmanın ilk adımı ücretsiz ön görüşme; "
+        f"burada hedefinizi ve günlük düzeninizi birlikte değerlendiriyoruz.",
+        f"{ilDE} online diyetisyen desteği almak isteyenler ücretsiz ön görüşmeyle "
+        f"başlıyor; program bu görüşmenin ardından kişiye özel hazırlanıyor.",
+        f"{ilDEN} ulaşarak ücretsiz ön görüşme alabilir, sağlıklı beslenme programınızın "
+        f"ilk adımını bugün atabilirsiniz.",
+    ][(m + 3) % 8]
+
+    govde = f"""
+<p>{giris}</p>
+<div class="ulas-kart">
+  <span class="ulas-etiket">{il} Online Diyetisyen · Randevu Hattı</span>
+  <a class="ulas-tel" href="{TEL_HREF}">{TEL_GORUNEN}</a>
+  <p class="ulas-alt">Bu numaradan online randevu alarak {il} Online Diyetisyen
+  {DYT.replace("Dyt. ", "")}'a ulaşabilirsiniz.</p>
+  <div class="ulas-btnler">
+    <a class="btn btn-wa" href="{WA}" target="_blank" rel="noopener">💬 WhatsApp'tan yaz</a>
+    <a class="btn btn-ghost" href="{TEL_HREF}">📞 Hemen ara</a>
+  </div>
+</div>
+<p>{kapanis}</p>
+<ul class="chk">
+<li><strong>Randevu:</strong> {ilDEN} telefon veya WhatsApp ile ulaşırsınız; uygun saat birlikte belirlenir.</li>
+<li><strong>Ön görüşme:</strong> Hedefiniz, günlük düzeniniz ve varsa tahlilleriniz konuşulur — {il} için bu görüşme ücretsizdir.</li>
+<li><strong>Program:</strong> {il} sofrasına ve çalışma saatlerinize göre kişiye özel hazırlanır.</li>
+<li><strong>Takip:</strong> {ilDE} ilerleme düzenli görüşmelerle değerlendirilir, plan buna göre güncellenir.</li>
+</ul>"""
+
+    aeo = (f"{il} online diyetisyene {TEL_GORUNEN} numarasından ulaşılabilir. "
+           f"Telefon veya WhatsApp üzerinden randevu alınır, ücretsiz ön görüşmede hedef ve "
+           f"günlük düzen değerlendirilir, ardından kişiye özel beslenme programı hazırlanır.")
+    return baslik, govde, aeo
+
+
+BLOKLAR["ulasim"] = blok_ulasim

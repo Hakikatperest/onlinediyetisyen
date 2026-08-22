@@ -40,11 +40,21 @@ def gorsel_sec(tohum, adet):
     return [GORSELLER[i] for i in sira[:max(1, min(adet, n))]]
 
 
-def gorsel_html(dosya, alt, baslik_alti=None, lazy=True):
+def gorsel_html(dosya, alt, baslik_alti=None, lazy=True, aranabilir=True):
+    """Görseli tel: bağlantısına sarar — görsele tıklayan arama başlatır.
+
+    aria-label ekran okuyucuya eylemi bildirir: görsel dekoratif değil,
+    tıklanınca arama başlatan bir bağlantı.
+    """
     cap = f"<figcaption>{baslik_alti}</figcaption>" if baslik_alti else ""
     yukleme = 'loading="lazy" decoding="async"' if lazy else 'fetchpriority="high" decoding="async"'
-    return (f'<figure class="lok-gorsel"><img src="{SITE}/images/{dosya}" alt="{alt}" '
-            f'width="1280" height="720" {yukleme}>{cap}</figure>')
+    img = (f'<img src="{SITE}/images/{dosya}" alt="{alt}" '
+           f'width="1280" height="720" {yukleme}>')
+    if aranabilir:
+        img = (f'<a class="gorsel-ara" href="{TEL_HREF}" '
+               f'aria-label="Telefonla ara: {TEL_GORUNEN}">{img}'
+               f'<span class="ara-rozet">📞 Hemen ara</span></a>')
+    return f'<figure class="lok-gorsel">{img}{cap}</figure>'
 
 
 # --------------------------------------------------------------------- SCHEMA
@@ -126,6 +136,25 @@ HEADER = f'''<header class="nav" id="nav">
   </div>
 </header>'''
 
+WA_METIN = "https://wa.me/905070361859?text=Merhaba%2C%20online%20diyet%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
+
+# Ana sayfadaki sağ alt sabit butonlarla birebir aynı işaretleme.
+# .wa-float / .call-float stilleri assets/local.css içinde zaten mevcut.
+FLOAT_BUTONLAR = f'''<a class="call-float pulse-blue" href="{TEL_HREF}" aria-label="Telefonla Ara">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+</a>
+<a class="wa-float pulse" href="{WA_METIN}" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 .5C7.4.5.5 7.4.5 16c0 2.8.7 5.4 2 7.7L.5 31.5l8-2.1c2.2 1.2 4.8 1.9 7.5 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.5 16 .5zm0 28.2c-2.4 0-4.7-.6-6.7-1.8l-.5-.3-4.7 1.2 1.3-4.6-.3-.5a12.6 12.6 0 0 1-1.9-6.7C3 8.8 8.8 3 16 3s13 5.8 13 13-5.8 12.7-13 12.7zm7.1-9.5c-.4-.2-2.3-1.1-2.6-1.3-.3-.1-.6-.2-.8.2-.2.4-.9 1.3-1.2 1.5-.2.2-.4.3-.8.1-.4-.2-1.6-.6-3.1-1.9-1.1-1-1.9-2.3-2.1-2.7-.2-.4 0-.6.2-.8.2-.2.4-.4.5-.7.2-.2.2-.4.4-.7.1-.3 0-.5 0-.7-.1-.2-.8-2-1.1-2.7-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.5-.3.4-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 2.3-.9 2.6-1.8.3-.9.3-1.6.2-1.8-.1-.1-.3-.2-.7-.4z"/></svg>
+</a>'''
+
+
+# Hero altındaki eylem butonları — ana sayfadaki .hero-cta ile aynı sınıflar.
+HERO_CTA = f'''<div class="hero-cta lok-hero-cta">
+  <a class="btn btn-wa btn-lg pulse" href="{WA_METIN}" target="_blank" rel="noopener">💬 Ücretsiz Ön Görüşme</a>
+  <a class="btn btn-ghost btn-lg" href="{TEL_HREF}">📞 {TEL_GORUNEN}</a>
+</div>'''
+
+
 FOOTER = f'''<footer class="site">
   <div class="wrap">
     <div class="foot-grid">
@@ -204,5 +233,6 @@ def sayfa(*, url, baslik, aciklama, h1, hero_alt, kirintilar, govde, schema, gun
 {govde}
 </main>
 {FOOTER}
+{FLOAT_BUTONLAR}
 </body>
 </html>'''
